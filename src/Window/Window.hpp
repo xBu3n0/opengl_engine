@@ -1,7 +1,9 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-#include <GLFW/glfw3.h>
+#include "../Input/Input.hpp"
+#include "../Mesh/Mesh.hpp"
+
 #include <vector>
 #include <string>
 
@@ -9,12 +11,12 @@ namespace window
 {
     const int SUCCESS           = 0;
     const int FAILURE           = 1;
-    const int CLOSED            = 3;
+    const int CLOSED            = 2;
 
-    const int UNINITIALIZED     = 4;
-    const int OPENED            = 5;
+    const int UNINITIALIZED     = 3;
+    const int OPENED            = 4;
 
-    const int ALREADY_EXISTS    = 6;
+    const int ALREADY_EXISTS    = 5;
 
     class Window
     {
@@ -46,6 +48,15 @@ namespace window
         GLFWwindow *myWindow = nullptr;
         // Fala o status da janela
         int status = UNINITIALIZED;
+
+        //Camera
+
+
+        //Inputs
+
+
+        //Meshes
+        mesh::Mesh meshes;
     };
 
     void addWindow(std::vector<Window*>& window);
