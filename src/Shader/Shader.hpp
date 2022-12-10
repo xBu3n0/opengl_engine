@@ -5,7 +5,9 @@
 #include <string.h>
 #include <fstream>
 
-#include <GL/glew.h>
+#include <iostream>
+
+#include "../../glad/glad.h"
 #include <GLFW/glfw3.h>
 
 namespace shader
@@ -18,11 +20,9 @@ namespace shader
     public:
         Shader();
 
-        // Cria o `Program` para ser utilizado quando for realizado o desenho. 
-        int CreateFromString(const char* vertexCode, const char* fragmentCode);
-        int CreateFromFiles(const char* vertexLocation, const char* fragmentLocation);
-        
-        // Lê o arquivo.
+        void CreateFromString(const char* vertexCode, const char* fragmentCode);
+        void CreateFromFiles(const char* vertexLocation, const char* fragmentLocation);
+
         std::string ReadFile(const char* fileLocation);
 
         // Ver uma forma de pegar inputs de maneira menos estática como está aqui.
@@ -35,18 +35,63 @@ namespace shader
         // Retira o shader que está sendo utilizado.
         void ClearShader();
 
+        GLuint ShaderID;
+
         // Apagar o shader
         ~Shader();
 
     private:
-        // Ver uma forma de pegar inputs de maneira menos estática como está aqui.
-        GLuint shaderID, uniformProjection, uniformModel, uniformView;
-
-        //
-        int CompileShader(const char* vertexCode, const char* fragmentCode);
-        //
-        int AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
+        void CompileShader(const char* vertexCode, const char* fragmentCode);
+        void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
     };
 }
+
+
+/*
+#ifndef SHADER_HPP
+#define SHADER_HPP
+
+#include <string>
+#include <string.h>
+#include <fstream>
+
+#include <iostream>
+
+#include "../../glad/glad.h"
+#include <GLFW/glfw3.h>
+
+
+namespace shader
+{
+    class Shader
+    {
+        public:
+            Shader();
+
+            // Cria o `Program` para ser utilizado quando for realizado o desenho. 
+            void CreateFromString(const char* vertexCode, const char* fragmentCode);
+            void CreateFromFiles(const char* vertexLocation, const char* fragmentLocation);
+
+            std::string ReadFile(const char* fileLocation);
+
+            GLuint GetProjectionLocation();
+            GLuint GetModelLocation();
+            GLuint GetViewLocation();
+
+            void UseShader();
+            void ClearShader();
+
+            ~Shader();
+
+        private:
+            GLuint shaderID, uniformProjection, uniformModel, uniformView;
+
+            void CompileShader(const char* vertexCode, const char* fragmentCode);
+            void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
+    };
+}
+
+#endif
+*/
 
 #endif

@@ -4,6 +4,11 @@
 #include "../Input/Input.hpp"
 #include "../Mesh/Mesh.hpp"
 
+#include <GL/gl.h>
+#include <GL/glext.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
 #include <vector>
 #include <string>
 
@@ -29,14 +34,19 @@ namespace window
         // Cria uma janela pré-definida
         int CreateWindow();
         // Cria uma janela com as especificações fornecidas (armazenado na variavel myWindow)
-        int CreateWindow(const std::string title, int width, int height);
-
+        int CreateWindow(const std::string& title, int width, int height);
+        // Cor do plano de fundo
         void SetBackground(float red, float green, float blue);
-
+        // Renderiza a cena
         int Render();
-
+        // Recebe o status da janela
         int GetStatus();
+        // Retorna o endereço da janela
         GLFWwindow *GetWindow();
+
+        //Meshes
+        mesh::Mesh meshes;
+
     private:
         // Propriedades da janela
         std::string windowTitle = "Blank";
@@ -54,9 +64,6 @@ namespace window
 
         //Inputs
 
-
-        //Meshes
-        mesh::Mesh meshes;
     };
 
     void addWindow(std::vector<Window*>& window);

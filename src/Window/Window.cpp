@@ -1,8 +1,4 @@
 #include "Window.hpp"
-#include <GL/gl.h>
-#include <GL/glext.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 
 namespace window
 {
@@ -15,7 +11,9 @@ namespace window
     }
 
     Window::Window()
-    {}
+    {
+
+    }
 
     Window::~Window()
     {
@@ -44,7 +42,7 @@ namespace window
         return ALREADY_EXISTS;
     }
 
-    int Window::CreateWindow(const std::string title, int width, int height)
+    int Window::CreateWindow(const std::string& title, int width, int height)
     {
         if(status == UNINITIALIZED)
         {
@@ -78,8 +76,15 @@ namespace window
             return status;
         }
 
+        meshes.Render();
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+
         glClearColor(r, g, b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
         glfwSwapBuffers(myWindow);
         glfwPollEvents();
 

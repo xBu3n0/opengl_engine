@@ -1,22 +1,28 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
+#include "../Shader/Shader.hpp"
+#include "../Text/Text.hpp"
+
 #include "../../glad/glad.h"
 #include <GLFW/glfw3.h>
+#include <string>
 #include <vector>
+#include <cstdlib>
+
 
 namespace mesh
 {
     struct object
     {
-        int VAO;
+        GLuint VAO;
 
-        int VBO;
-        int verticesCount;
+        GLuint VBO;
+        GLuint verticesCount;
         
-        int IBO;
+        GLuint IBO;
         bool useIBO;
-        int indexCount;
+        GLuint indexCount;
         
         bool willBeRendered;
 
@@ -32,16 +38,23 @@ namespace mesh
         Mesh();
     
         int AddMesh();
+        int AddText();
         int UpdateMesh();
         void EnableObject(int index);
         void DisableObject(int index);
         int DeleteMesh();
 
+        void Render();
+
+        void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
         void RenderMesh();
+
+        int shaderID;
 
     private:
         void RenderObject(struct object& obj);
         std::vector<struct object> objects;
+        std::vector<text::Text> texts;
     };
 }
 
