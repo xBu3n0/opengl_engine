@@ -38,7 +38,7 @@ namespace mesh
         Mesh();
     
         int AddMesh();
-        int AddText();
+        int AddText(std::string& text, glm::vec2& pos, float scale, glm::vec3& color);
         int UpdateMesh();
         void EnableObject(int index);
         void DisableObject(int index);
@@ -46,13 +46,17 @@ namespace mesh
 
         void Render();
 
-        void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
         void RenderMesh();
 
         int shaderID;
 
     private:
+        shader::Shader s;
+        
         void RenderObject(struct object& obj);
+        void RenderText(text::Text &tex, shader::Shader &s);
+        // void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
+
         std::vector<struct object> objects;
         std::vector<text::Text> texts;
     };

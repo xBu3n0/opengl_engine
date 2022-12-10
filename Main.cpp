@@ -78,7 +78,11 @@ int main()
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    windows[0]->meshes.AddText();
+    std::string x = "AAAAAAA";
+    glm::vec2 pos = glm::vec2(4, 5);
+    glm::vec3 color = glm::vec3(0.5, 0.5, 0.0);
+
+    windows[0]->meshes.AddText(x, pos, 2, color);
 
 
     while(!windows.empty())

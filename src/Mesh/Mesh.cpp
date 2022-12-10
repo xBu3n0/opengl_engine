@@ -7,9 +7,14 @@ namespace mesh
         
     }
 
-    int Mesh::AddText()
+    int Mesh::AddText(std::string& text, glm::vec2& pos, float scale, glm::vec3& color)
     {
         struct text::Text obj;
+
+        obj.c.text  = text;
+        obj.c.pos   = pos;
+        obj.c.scale = scale;
+        obj.c.color = color;
 
         glGenVertexArrays(1, &obj.c.VAO);
         glGenBuffers(1, &obj.c.VBO);
@@ -31,6 +36,15 @@ namespace mesh
 
 
         return SUCCESS;   
+    }
+
+    void Mesh::Render()
+    {
+        for(auto x : objects)
+            if(x.willBeRendered == true)
+                RenderObject(x);
+        for(auto x : texts)
+            RenderText(x, s);
     }
 
     void Mesh::RenderObject(struct object& obj) 
@@ -55,23 +69,23 @@ namespace mesh
         return;
     }
 
-    void Mesh::RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color)
+    void Mesh::RenderText(text::Text &tex, shader::Shader &s)
     {
         // activate corresponding render state
         s.UseShader();
-        glUniform3f(glGetUniformLocation(s.ShaderID, "textColor"), color.x, color.y, color.z);
+        glUniform3f(glGetUniformLocation(s.ShaderID, "textColor"), tex.c.color.x, tex.c.color.y, tex.c.color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(tex.c.VAO);
         // iterate through all characters
         std::string::const_iterator c;
 
-        for (c = text.begin(); c != text.end(); c++)
+        for (c = tex.c.text.begin(); c != tex.c.text.end(); c++)
         {
             text::Character ch = tex.Characters[*c];
-            float xpos = x + ch.Bearing.x * scale;
-            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
-            float w = ch.Size.x * scale;
-            float h = ch.Size.y * scale;
+            float xpos = tex.c.pos.x + ch.Bearing.x * tex.c.scale;
+            float ypos = tex.c.pos.y - (ch.Size.y - ch.Bearing.y) * tex.c.scale;
+            float w = ch.Size.x * tex.c.scale;
+            float h = ch.Size.y * tex.c.scale;
 
             // update VBO for each character
             float vertices[6][4] = {
@@ -92,7 +106,7 @@ namespace mesh
             // render quad
             glDrawArrays(GL_TRIANGLES, 0, 6);
             // advance cursors for next glyph (advance is 1/64 pixels)
-            x += (ch.Advance >> 6) * scale; // bitshift by 6 (2^6 = 64)
+            tex.c.pos.x += (ch.Advance >> 6) * tex.c.scale; // bitshift by 6 (2^6 = 64)
         }
 
         glBindVertexArray(0);
