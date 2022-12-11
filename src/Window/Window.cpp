@@ -76,14 +76,14 @@ namespace window
             return status;
         }
 
-        meshes.Render();
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 
         glClearColor(r, g, b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::mat4 projection = glm::ortho(0.0f, 600.0f, 0.0f, 400.0f);
+
+        meshes.Render();
 
         glfwSwapBuffers(myWindow);
         glfwPollEvents();

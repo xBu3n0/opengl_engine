@@ -35,12 +35,14 @@ namespace shader
         // Retira o shader que está sendo utilizado.
         void ClearShader();
 
-        GLuint ShaderID;
+        GLuint GetShaderID();
 
         // Apagar o shader
         ~Shader();
 
     private:
+        GLuint ShaderID;
+
         void CompileShader(const char* vertexCode, const char* fragmentCode);
         void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
     };

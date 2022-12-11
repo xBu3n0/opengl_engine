@@ -7,7 +7,30 @@ namespace mesh
         
     }
 
-    int Mesh::AddText(std::string& text, glm::vec2& pos, float scale, glm::vec3& color)
+    int Mesh::AddCube(glm::vec3 pos, float length)
+    {
+        std::vector<GLfloat> data;
+        std::vector<GLuint> indexes;
+
+        Eng3D::CreateCube(data, indexes, pos, length);
+
+        struct object obj = {
+            0,
+            0,
+            (GLuint) data.size(),
+            0,
+            true,
+            (GLuint) indexes.size(),
+            true,
+            data
+        };
+
+        objects.push_back(obj);
+
+        return SUCCESS;
+    }
+
+    int Mesh::AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
     {
         struct text::Text obj;
 
@@ -40,10 +63,10 @@ namespace mesh
 
     void Mesh::Render()
     {
-        for(auto x : objects)
+        for(struct object x : objects)
             if(x.willBeRendered == true)
                 RenderObject(x);
-        for(auto x : texts)
+        for(text::Text x : texts)
             RenderText(x, s);
     }
 
@@ -71,11 +94,15 @@ namespace mesh
 
     void Mesh::RenderText(text::Text &tex, shader::Shader &s)
     {
-        // activate corresponding render state
         s.UseShader();
-        glUniform3f(glGetUniformLocation(s.ShaderID, "textColor"), tex.c.color.x, tex.c.color.y, tex.c.color.z);
+        // activate corresponding render state
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(600), 0.0f, static_cast<float>(400));
+        glUniformMatrix4fv(glGetUniformLocation(s.GetShaderID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        
+        glUniform3f(glGetUniformLocation(s.GetShaderID(), "textColor"), tex.c.color.x, tex.c.color.y, tex.c.color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(tex.c.VAO);
+
         // iterate through all characters
         std::string::const_iterator c;
 
@@ -89,14 +116,16 @@ namespace mesh
 
             // update VBO for each character
             float vertices[6][4] = {
-                { xpos, ypos + h, 0.0f, 0.0f },
-                { xpos, ypos, 0.0f, 1.0f },
-                { xpos + w, ypos, 1.0f, 1.0f },
-                { xpos, ypos + h, 0.0f, 0.0f },
-                { xpos + w, ypos, 1.0f, 1.0f },
-                { xpos + w, ypos + h, 1.0f, 0.0f }
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos,     ypos,       0.0f, 1.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos + w, ypos + h,   1.0f, 0.0f }
             };
-            
+
+            std::cout << ch.TextureID << ' ';
+
             // render glyph texture over quad
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
             // update content of VBO memory

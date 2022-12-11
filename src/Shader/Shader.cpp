@@ -78,6 +78,11 @@ namespace shader
         }
     }
 
+    GLuint Shader::GetShaderID()
+    {
+        return ShaderID;
+    }
+
     void Shader::UseShader()
     {
         glUseProgram(ShaderID);

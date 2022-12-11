@@ -3,6 +3,7 @@
 
 #include "../Shader/Shader.hpp"
 #include "../Text/Text.hpp"
+#include "../Objects/Eng3D/Cube.hpp"
 
 #include "../../glad/glad.h"
 #include <GLFW/glfw3.h>
@@ -38,7 +39,8 @@ namespace mesh
         Mesh();
     
         int AddMesh();
-        int AddText(std::string& text, glm::vec2& pos, float scale, glm::vec3& color);
+        int AddCube(glm::vec3 pos, float length);
+        int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
         int UpdateMesh();
         void EnableObject(int index);
         void DisableObject(int index);

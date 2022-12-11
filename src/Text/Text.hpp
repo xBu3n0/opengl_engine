@@ -36,9 +36,6 @@ namespace text
     {
     public:
         Text();
-        void DrawText(std::string& text, int x, int y);
-        void Render();
-    
     
     public:
         Character c;

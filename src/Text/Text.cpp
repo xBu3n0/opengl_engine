@@ -14,11 +14,16 @@ namespace text
         if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
             std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 
+        // set size to load glyphs as
+        FT_Set_Pixel_Sizes(face, 0, 48);
 
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // no byte-alignment restriction
+        // disable byte-alignment restriction
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+        // load first 128 characters of ASCII set
         for (unsigned char c = 0; c < 128; c++)
         {
-            // load character glyph
+            // Load character glyph 
             if (FT_Load_Char(face, c, FT_LOAD_RENDER))
             {
                 std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
@@ -53,10 +58,11 @@ namespace text
                 glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                 static_cast<unsigned int>(face->glyph->advance.x)
             };
-
             Characters.insert(std::pair<char, Character>(c, character));
         }
-
+        glBindTexture(GL_TEXTURE_2D, 0);
+        
+        // destroy FreeType once we're finished
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
     }

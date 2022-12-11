@@ -44,7 +44,6 @@ int main()
     // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_REFRESH_RATE, 10);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     
     std::vector<window::Window*> windows;
@@ -61,13 +60,17 @@ int main()
     for(window::Window *w : windows)
     {
         glfwMakeContextCurrent(w->GetWindow());
-        glfwSwapInterval(0);
+        // glfwSwapInterval(0);
 
         if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
         {
             std::cout << "c";
             return -1;
         }
+
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     shader::Shader s;
@@ -78,11 +81,7 @@ int main()
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    std::string x = "AAAAAAA";
-    glm::vec2 pos = glm::vec2(4, 5);
-    glm::vec3 color = glm::vec3(0.5, 0.5, 0.0);
-
-    windows[0]->meshes.AddText(x, pos, 2, color);
+    windows[0]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
 
     while(!windows.empty())
@@ -105,7 +104,7 @@ int main()
     
         std::chrono::duration<double> elapsed_seconds = std::chrono::steady_clock::now() - start;
 
-        // std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
+        std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
     }
 
     glfwTerminate();
