@@ -124,8 +124,6 @@ namespace mesh
                 { xpos + w, ypos + h,   1.0f, 0.0f }
             };
 
-            std::cout << ch.TextureID << ' ';
-
             // render glyph texture over quad
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
             // update content of VBO memory

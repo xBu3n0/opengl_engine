@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <chrono>
+#include <cstdio>
+#include <ostream>
 #include <vector>
 #include <iostream>
 
@@ -49,29 +51,15 @@ int main()
     std::vector<window::Window*> windows;
     
     window::addWindow(windows);
-    // window::addWindow(windows);
+    window::addWindow(windows);
 
-    windows[0]->CreateWindow("Main", 600, 400);
+    if(windows[0]->CreateWindow("Main", 600, 400) == window::FAILURE)
+        return -1;
+
     windows[0]->SetBackground(0.2, 0.5, 0.3);
-    // windows[1]->CreateWindow("Secondary", 300, 600);
-    // windows[1]->SetBackground(0.8, 0.1, 0.1);
+    windows[1]->CreateWindow("Secondary", 300, 600);
+    windows[1]->SetBackground(0.8, 0.1, 0.1);
 
-    
-    for(window::Window *w : windows)
-    {
-        glfwMakeContextCurrent(w->GetWindow());
-        // glfwSwapInterval(0);
-
-        if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-        {
-            std::cout << "c";
-            return -1;
-        }
-
-        glEnable(GL_CULL_FACE);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    }
 
     shader::Shader s;
     s.CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
@@ -92,6 +80,9 @@ int main()
         {
             if(windows[i]->GetStatus() == window::OPENED)
             {
+                struct window::mouse* m = windows[i]->GetMouse();
+                std::cout << m->mouseFirstMoved << '\t' << m->lastX << ' ' << m->lastY << '\t' << m->xChange << ' ' << m->yChange << std::endl;
+
                 windows[i]->Render();
             }
             else
@@ -102,9 +93,11 @@ int main()
             }
         }
     
+        std::cout << "------------------------------" << std::endl;
+
         std::chrono::duration<double> elapsed_seconds = std::chrono::steady_clock::now() - start;
 
-        std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
+        // std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
     }
 
     glfwTerminate();

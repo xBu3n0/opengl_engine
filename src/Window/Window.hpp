@@ -23,6 +23,12 @@ namespace window
 
     const int ALREADY_EXISTS    = 5;
 
+    struct mouse
+    {
+        bool mouseFirstMoved;
+        GLfloat xChange, yChange, lastX, lastY;
+    };
+
     class Window
     {
     public:
@@ -44,18 +50,23 @@ namespace window
         // Retorna o endereço da janela
         GLFWwindow *GetWindow();
 
+    public:
+        //Handle inputs
+        bool* GetKeys();
+        struct mouse* GetMouse();
+        
         //Meshes
         mesh::Mesh meshes;
 
     private:
+        // Variavel que armazena a janela gerada pela classe
+        GLFWwindow *myWindow = nullptr;
         // Propriedades da janela
         std::string windowTitle = "Blank";
         int width = 600;
         int height = 400;
         float r = 0.0f, g = 0.0f, b = 0.0f;
 
-        // Variavel que armazena a janela gerada pela classe
-        GLFWwindow *myWindow = nullptr;
         // Fala o status da janela
         int status = UNINITIALIZED;
 
@@ -63,7 +74,16 @@ namespace window
 
 
         //Inputs
+        static void HandleKeys(GLFWwindow* window, int key, int code, int action, int mode);
+        static void HandleMouse(GLFWwindow* window, double xPos, double yPos);
 
+    private:
+        bool keys[1024];
+        struct mouse mouseInfo = {
+            true,
+            0, 0,
+            0, 0
+        };
     };
 
     void addWindow(std::vector<Window*>& window);
