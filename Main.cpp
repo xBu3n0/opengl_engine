@@ -2,8 +2,7 @@
 #include "src/Mesh/Mesh.hpp"
 #include "src/Shader/Shader.hpp"
 #include "src/Window/Window.hpp"
-#include <GL/gl.h>
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 #include <chrono>
 #include <vector>
@@ -63,7 +62,7 @@ int main()
     // windows[0]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
     // windows[1]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
-    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, 1.0f), 2);
+    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2);
 
 
     std::thread t(handleInput, std::ref(windows));
