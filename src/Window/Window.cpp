@@ -1,4 +1,5 @@
 #include "Window.hpp"
+#include <GLFW/glfw3.h>
 
 namespace window
 {
@@ -67,10 +68,13 @@ namespace window
         return ALREADY_EXISTS;
     }
 
-    int Window::CreateWindow(const std::string& title, int width, int height)
+    int Window::CreateWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen)
     {
         if(status == UNINITIALIZED)
         {
+            glfwWindowHint(GLFW_RESIZABLE, isResizable);
+            // glfwWindowHint(GLFW_, isFullscreen);
+
             this->windowTitle = title;
             this->width = width;
             this->height = height;

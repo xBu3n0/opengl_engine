@@ -26,6 +26,7 @@ namespace mesh
         GLuint indexCount;
         
         bool willBeRendered;
+        GLuint typeOfRendering;
 
         std::vector<GLfloat> data;
     };

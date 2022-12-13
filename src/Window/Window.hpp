@@ -40,7 +40,7 @@ namespace window
         // Cria uma janela pré-definida
         int CreateWindow();
         // Cria uma janela com as especificações fornecidas (armazenado na variavel myWindow)
-        int CreateWindow(const std::string& title, int width, int height);
+        int CreateWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen);
         // Cor do plano de fundo
         void SetBackground(float red, float green, float blue);
         // Renderiza a cena
