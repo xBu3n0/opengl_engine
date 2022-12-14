@@ -48,12 +48,12 @@ int main()
     std::vector<window::Window*> windows;
     
     window::addWindow(windows);
-    // window::addWindow(windows);
+    window::addWindow(windows);
 
     if(windows[0]->CreateWindow("Main", 600, 400, true, false) == window::FAILURE) return -1;
     // if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
-    windows[0]->SetBackground(0.2, 0.5, 0.3);
-    // windows[1]->SetBackground(0.8, 0.1, 0.1);
+    windows[0]->SetBackground(0.2, 0.5, 0.3, 1.0);
+    // windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
 
 
     shader::Shader s;
@@ -64,6 +64,7 @@ int main()
     // windows[1]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
     windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
+    windows[1]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
 
 
     // std::thread t(handleInput, std::ref(windows));

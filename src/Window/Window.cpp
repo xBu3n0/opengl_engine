@@ -48,9 +48,9 @@ namespace window
             for(int i = 0; i < 1024; ++i)
                 this->keys[i] = false;
 
-            glEnable(GL_CULL_FACE);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            // glEnable(GL_CULL_FACE);
+            // glEnable(GL_BLEND);
+            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
             status = OPENED;
 
@@ -174,10 +174,12 @@ namespace window
         }
 
 
-        glClearColor(r, g, b, 1.0f);
+        glClearColor(r, g, b, a);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        
+        glfwGetFramebufferSize(myWindow, &width, &height);
+        glViewport(0, 0, width, height);
+
         meshes.Render();
 
         glfwSwapBuffers(myWindow);
@@ -186,11 +188,12 @@ namespace window
         return status;
     }
 
-    void Window::SetBackground(float red, float green, float blue)
+    void Window::SetBackground(float red, float green, float blue, float alpha)
     {
         this->r = red;
         this->g = green;
         this->b = blue;
+        this->a = alpha;
     }
 
     int Window::GetStatus()

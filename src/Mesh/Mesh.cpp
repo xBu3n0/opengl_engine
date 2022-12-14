@@ -48,7 +48,7 @@ namespace mesh
     void Mesh::Render()
     {
         for(struct object::object x : objects)
-            if(x.willBeRendered == true)
+            if(x.willBeRendered)
                 RenderObject(x);
         // for(text::Text x : texts)
         //     RenderText(x, s);
@@ -56,14 +56,16 @@ namespace mesh
 
     void Mesh::RenderObject(struct object::object& obj) 
     {
-        std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
-
-        if(obj.useIBO == true)
+        // std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
+        
+        if(obj.useIBO)
         {
             obj.s.UseShader();
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
+            // 
             glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
+            // 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
 
@@ -71,7 +73,9 @@ namespace mesh
         }
         else
         {
+            obj.s.UseShader();
             glBindVertexArray(obj.VAO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
             glDrawArrays(obj.typeOfRendering, 0, obj.data.size());
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);

@@ -42,7 +42,7 @@ namespace window
         // Cria uma janela com as especificações fornecidas (armazenado na variavel myWindow)
         int CreateWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen);
         // Cor do plano de fundo
-        void SetBackground(float red, float green, float blue);
+        void SetBackground(float red, float green, float blue, float alpha);
         // Renderiza a cena
         int Render();
         // Recebe o status da janela
@@ -65,7 +65,7 @@ namespace window
         std::string windowTitle = "Blank";
         int width = 600;
         int height = 400;
-        float r = 0.0f, g = 0.0f, b = 0.0f;
+        float r = 0.0f, g = 0.0f, b = 0.0f, a = 0.0f;
 
         // Fala o status da janela
         int status = UNINITIALIZED;
