@@ -7,28 +7,28 @@ namespace shader
         ShaderID = 0;
     }
 
-    void Shader::CreateFromString(const char* vertexCode, const char* fragmentCode)
+    void Shader::CreateFromString(const std::string& vertexCode, const std::string& fragmentCode)
     {
         CompileShader(vertexCode, fragmentCode);
     }
 
-    void Shader::CreateFromFiles(const char* vertexLocation, const char* fragmentLocation)
+    void Shader::CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation)
     {// Cria com base nos arquivos que foram informados.
         std::string vertexString = ReadFile(vertexLocation);
         std::string fragmentString = ReadFile(fragmentLocation);
-        const char* vertexCode = vertexString.c_str();
-        const char* fragmentCode = fragmentString.c_str();
+        std::string vertexCode = vertexString.c_str();
+        std::string fragmentCode = fragmentString.c_str();
 
         CompileShader(vertexCode, fragmentCode);
     }
 
-    std::string Shader::ReadFile(const char* fileLocation)
+    std::string Shader::ReadFile(const std::string& fileLocation)
     {
         std::string content;
         std::ifstream fileStream(fileLocation, std::ios::in);
 
         if (!fileStream.is_open()) {
-            printf("Failed to read %s! File doesn't exist.", fileLocation);
+            std::cout << "Failed to read " << fileLocation << "! File doesn't exist." << std::endl;
             return "";
         }
 
@@ -43,7 +43,7 @@ namespace shader
         return content;
     }
 
-    void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
+    void Shader::CompileShader(const std::string& vertexCode, const std::string& fragmentCode)
     {
         ShaderID = glCreateProgram();
 
@@ -98,15 +98,15 @@ namespace shader
     }
 
 
-    void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
+    void Shader::AddShader(GLuint theProgram, const std::string& shaderCode, GLenum shaderType)
     {
         GLuint theShader = glCreateShader(shaderType);
 
         const GLchar* theCode[1];
-        theCode[0] = shaderCode;
+        theCode[0] = shaderCode.data();
 
         GLint codeLength[1];
-        codeLength[0] = strlen(shaderCode);
+        codeLength[0] = shaderCode.size();
 
         glShaderSource(theShader, 1, theCode, codeLength);
         glCompileShader(theShader);

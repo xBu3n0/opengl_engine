@@ -2,8 +2,11 @@
 
 namespace Eng3D
 {
-    void CreateCube(std::vector<GLfloat>& data, std::vector<GLuint>& indexes, glm::vec3 pos, float length)
+    struct object::object CreateCube(glm::vec3 pos, float length, shader::Shader s)
     {
+        GLuint VAO, VBO;
+
+        /*
         data = {
             pos.x,          pos.y,          pos.z,
             pos.x+length,   pos.y,          pos.z,
@@ -29,5 +32,43 @@ namespace Eng3D
             7, 4, 2,
             7, 4, 5
         };
+        */
+
+        std::vector<GLfloat> data = {
+            -1.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f
+        };
+
+        std::vector<GLuint> vertices;
+
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindVertexArray(0);
+
+        object::object obj = {
+            VAO,
+            VBO,
+            (GLuint) data.size(),
+            0,
+            false,
+            (GLuint) vertices.size(),
+            true,
+            GL_TRIANGLES,
+            data,
+            s
+        };
+
+        return obj;
     }
 }

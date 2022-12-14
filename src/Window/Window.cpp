@@ -99,9 +99,7 @@ namespace window
             for(int i = 0; i < 1024; ++i)
                 this->keys[i] = false;
 
-            glEnable(GL_CULL_FACE);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glfwWindowHint(GLFW_RESIZABLE, isResizable);
 
             status = OPENED;
 
@@ -179,9 +177,7 @@ namespace window
         glClearColor(r, g, b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glm::mat4 projection = glm::ortho(0.0f, 600.0f, 0.0f, 400.0f);
-
+        
         meshes.Render();
 
         glfwSwapBuffers(myWindow);

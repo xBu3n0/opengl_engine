@@ -7,47 +7,9 @@ namespace mesh
         
     }
 
-    int Mesh::AddCube(glm::vec3 pos, float length)
+    int Mesh::AddCube(glm::vec3 pos, float length, shader::Shader s)
     {
-        GLuint VAO, VBO, IBO;
-
-        std::vector<GLfloat> data;
-        std::vector<GLuint> indexes;
-
-        Eng3D::CreateCube(data, indexes, pos, length);
-
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
-
-        glGenBuffers(1, &IBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
-
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * data.size(), data.data(), GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(0);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-        glBindVertexArray(0);
-
-        struct object obj = {
-            VAO,
-            VBO,
-            (GLuint) data.size(),
-            IBO,
-            true,
-            (GLuint) indexes.size(),
-            true,
-            GL_TRIANGLES,
-            data
-        };
-
-        objects.push_back(obj);
+        objects.push_back(Eng3D::CreateCube(pos, length, s));
 
         return SUCCESS;
     }
@@ -85,19 +47,20 @@ namespace mesh
 
     void Mesh::Render()
     {
-        for(struct object x : objects)
+        for(struct object::object x : objects)
             if(x.willBeRendered == true)
                 RenderObject(x);
-        for(text::Text x : texts)
-            RenderText(x, s);
+        // for(text::Text x : texts)
+        //     RenderText(x, s);
     }
 
-    void Mesh::RenderObject(struct object& obj) 
+    void Mesh::RenderObject(struct object::object& obj) 
     {
         std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
 
         if(obj.useIBO == true)
         {
+            obj.s.UseShader();
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
             glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
@@ -179,7 +142,7 @@ namespace mesh
 
     void Mesh::RenderMesh()
     {
-        for(struct object obj : objects)
+        for(struct object::object obj : objects)
             if(obj.willBeRendered == true)
                 RenderObject(obj);
         return;

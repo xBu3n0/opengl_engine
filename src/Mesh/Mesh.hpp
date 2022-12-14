@@ -14,23 +14,6 @@
 
 namespace mesh
 {
-    struct object
-    {
-        GLuint VAO;
-
-        GLuint VBO;
-        GLuint verticesCount;
-        
-        GLuint IBO;
-        bool useIBO;
-        GLuint indexCount;
-        
-        bool willBeRendered;
-        GLuint typeOfRendering;
-
-        std::vector<GLfloat> data;
-    };
-
     const int FAILURE = 0;
     const int SUCCESS = 1;
 
@@ -40,7 +23,7 @@ namespace mesh
         Mesh();
     
         int AddMesh();
-        int AddCube(glm::vec3 pos, float length);
+        int AddCube(glm::vec3 pos, float length, shader::Shader s);
         int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
         int UpdateMesh();
         void EnableObject(int index);
@@ -54,13 +37,11 @@ namespace mesh
         int shaderID;
 
     private:
-        shader::Shader s;
-        
-        void RenderObject(struct object& obj);
+        void RenderObject(struct object::object& obj);
         void RenderText(text::Text &tex, shader::Shader &s);
         // void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
 
-        std::vector<struct object> objects;
+        std::vector<struct object::object> objects;
         std::vector<text::Text> texts;
     };
 }

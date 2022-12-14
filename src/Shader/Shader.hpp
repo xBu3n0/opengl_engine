@@ -20,10 +20,10 @@ namespace shader
     public:
         Shader();
 
-        void CreateFromString(const char* vertexCode, const char* fragmentCode);
-        void CreateFromFiles(const char* vertexLocation, const char* fragmentLocation);
+        void CreateFromString(const std::string& vertexCode, const std::string& fragmentCode);
+        void CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation);
 
-        std::string ReadFile(const char* fileLocation);
+        std::string ReadFile(const std::string& fileLocation);
 
         // Ver uma forma de pegar inputs de maneira menos estática como está aqui.
         GLuint GetProjectionLocation();
@@ -43,8 +43,8 @@ namespace shader
     private:
         GLuint ShaderID;
 
-        void CompileShader(const char* vertexCode, const char* fragmentCode);
-        void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
+        void CompileShader(const std::string& vertexCode, const std::string& fragmentCode);
+        void AddShader(GLuint theProgram, const std::string& shaderCode, GLenum shaderType);
     };
 }
 
