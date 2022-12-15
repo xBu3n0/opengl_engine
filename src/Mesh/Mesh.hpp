@@ -21,7 +21,8 @@ namespace mesh
     {
     public:
         Mesh();
-    
+        void SetWindow(GLFWwindow* myWindow);
+
         int AddMesh();
         int AddCube(glm::vec3 pos, float length, shader::Shader s);
         int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
@@ -32,14 +33,13 @@ namespace mesh
 
         void Render();
 
-        void RenderMesh();
-
-        int shaderID;
-
     private:
         void RenderObject(struct object::object& obj);
         void RenderText(text::Text &tex, shader::Shader &s);
         // void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
+
+    private:
+        GLFWwindow *myWindow = nullptr;
 
         std::vector<struct object::object> objects;
         std::vector<text::Text> texts;

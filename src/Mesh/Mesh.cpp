@@ -1,4 +1,5 @@
 #include "Mesh.hpp"
+#include <GLFW/glfw3.h>
 
 namespace mesh
 {
@@ -7,8 +8,15 @@ namespace mesh
         
     }
 
+    void Mesh::SetWindow(GLFWwindow *myWindow)
+    {
+        this->myWindow = myWindow;
+    }
+
     int Mesh::AddCube(glm::vec3 pos, float length, shader::Shader s)
     {
+        glfwMakeContextCurrent(myWindow);
+
         objects.push_back(Eng3D::CreateCube(pos, length, s));
 
         return SUCCESS;
@@ -56,7 +64,7 @@ namespace mesh
 
     void Mesh::RenderObject(struct object::object& obj) 
     {
-        // std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
+        std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
         
         if(obj.useIBO)
         {
@@ -74,6 +82,7 @@ namespace mesh
         else
         {
             obj.s.UseShader();
+
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
             glDrawArrays(obj.typeOfRendering, 0, obj.data.size());
@@ -141,14 +150,5 @@ namespace mesh
     void Mesh::DisableObject(int index)
     {
         objects[index].willBeRendered = false;
-    }
-
-
-    void Mesh::RenderMesh()
-    {
-        for(struct object::object obj : objects)
-            if(obj.willBeRendered == true)
-                RenderObject(obj);
-        return;
     }
 }

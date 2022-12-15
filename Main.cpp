@@ -10,19 +10,10 @@
 
 #include <thread>
 
-namespace windowName
-{
-    const int MAIN = 0;
-    const int SECONDARY = 1;
-}
-
 
 void handleInput(std::vector<window::Window*>& windows)
 {
     using namespace std::chrono_literals;
-    
-    
-    std::string t;
 
     while(!windows.empty())
     {
@@ -37,13 +28,14 @@ int main()
 {
     if(!glfwInit())
     {
-        std::cout << "a";
+        std::cout << "Erro na inicialização do GLFW" << std::endl;
         return -1;
     }
 
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 
     std::vector<window::Window*> windows;
     
@@ -51,20 +43,22 @@ int main()
     window::addWindow(windows);
 
     if(windows[0]->CreateWindow("Main", 600, 400, true, false) == window::FAILURE) return -1;
-    // if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
-    windows[0]->SetBackground(0.2, 0.5, 0.3, 1.0);
-    // windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
-
+    if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
 
     shader::Shader s;
     s.CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
                     "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag");
 
+    windows[0]->SetBackground(0.2, 0.5, 0.3, 1.0);
+    windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
+
+
+    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s); 
+    windows[1]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
+
     // windows[0]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
     // windows[1]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
-    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
-    windows[1]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
 
 
     // std::thread t(handleInput, std::ref(windows));

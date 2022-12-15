@@ -48,10 +48,6 @@ namespace window
             for(int i = 0; i < 1024; ++i)
                 this->keys[i] = false;
 
-            // glEnable(GL_CULL_FACE);
-            // glEnable(GL_BLEND);
-            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
             status = OPENED;
 
             glfwSetWindowUserPointer(myWindow, this);
@@ -87,6 +83,7 @@ namespace window
                 return status;
             }
 
+            meshes.SetWindow(myWindow);
             glfwMakeContextCurrent(myWindow);
             // glfwSwapInterval(0);
 
@@ -99,7 +96,6 @@ namespace window
             for(int i = 0; i < 1024; ++i)
                 this->keys[i] = false;
 
-            glfwWindowHint(GLFW_RESIZABLE, isResizable);
 
             status = OPENED;
 
