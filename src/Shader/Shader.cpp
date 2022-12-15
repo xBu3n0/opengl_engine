@@ -1,3 +1,9 @@
+/*
+
+    ERRRO NO SHADER, NÃO ESTÁ FUNCIONANDO.
+
+*/
+
 #include "Shader.hpp"
 
 namespace shader

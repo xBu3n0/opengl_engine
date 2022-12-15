@@ -64,7 +64,7 @@ namespace mesh
 
     void Mesh::RenderObject(struct object::object& obj) 
     {
-        std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
+        // std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
         
         if(obj.useIBO)
         {
