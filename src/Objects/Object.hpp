@@ -28,7 +28,7 @@ namespace object
         GLuint typeOfRendering;
 
         std::vector<GLfloat> data;
-        shader::Shader s;
+        GLuint s;
     };
 }
 

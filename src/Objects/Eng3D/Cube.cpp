@@ -2,7 +2,7 @@
 
 namespace Eng3D
 {
-    struct object::object CreateCube(glm::vec3 pos, float length, shader::Shader s)
+    struct object::object CreateCube(glm::vec3 pos, float length)
     {
         GLuint VAO, VBO;
 
@@ -66,7 +66,7 @@ namespace Eng3D
             true,
             GL_TRIANGLES,
             data,
-            s
+            0
         };
 
         return obj;

@@ -14,11 +14,16 @@
 void handleInput(std::vector<window::Window*>& windows)
 {
     using namespace std::chrono_literals;
+    int i = 0;
 
     while(!windows.empty())
     {
-        std::cout << "Número de janelas abertas: " << windows.size() << std::endl;
+        ++i;
+        std::cout << "Número de janelas abertas: " << windows.size() << ", i: " << i << std::endl;
         std::this_thread::sleep_for(100ms);
+    
+        if(i == 50)
+            windows[0]->meshes.UpdateObjectShader(0, 0);
     }
 
     return;
@@ -42,26 +47,27 @@ int main()
     window::addWindow(windows);
     window::addWindow(windows);
 
+    shader::Shader s[2];
+
     if(windows[0]->CreateWindow("Main", 600, 400, true, false) == window::FAILURE) return -1;
-    if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
-
-    shader::Shader s;
-    s.CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
-                    "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag");
-
+    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2); 
     windows[0]->SetBackground(0.2, 0.5, 0.3, 1.0);
+
+
+    if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
+    windows[1]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2);
     windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
 
-
-    windows[0]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s); 
-    windows[1]->meshes.AddCube(glm::vec3(1.0f, 1.0f, -1.0f), 2, s);
-
-    // windows[0]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
-    // windows[1]->meshes.AddText("x, pos, 1.0f, color", glm::vec2(25.0f, 25.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    s[0].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
+                    "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag", windows[0]->GetWindow());
+    windows[0]->meshes.UpdateObjectShader(0, s[0].GetShaderID());
 
 
+    s[1].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
+                    "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag", windows[1]->GetWindow());
+    windows[1]->meshes.UpdateObjectShader(0, s[1].GetShaderID());
 
-    // std::thread t(handleInput, std::ref(windows));
+    std::thread t(handleInput, std::ref(windows));
 
     while(!windows.empty())
     {
@@ -87,7 +93,7 @@ int main()
         // std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
     }
 
-    // t.join();
+    t.join();
 
     glfwTerminate();
     return 0;

@@ -26,8 +26,8 @@ namespace shader
     public:
         Shader();
 
-        void CreateFromString(const std::string& vertexCode, const std::string& fragmentCode);
-        void CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation);
+        void CreateFromString(const std::string& vertexCode, const std::string& fragmentCode, GLFWwindow* myWindow);
+        void CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation, GLFWwindow* myWindow);
 
         std::string ReadFile(const std::string& fileLocation);
 

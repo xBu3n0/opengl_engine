@@ -5,6 +5,7 @@
 */
 
 #include "Shader.hpp"
+#include <GLFW/glfw3.h>
 
 namespace shader
 {
@@ -13,13 +14,15 @@ namespace shader
         ShaderID = 0;
     }
 
-    void Shader::CreateFromString(const std::string& vertexCode, const std::string& fragmentCode)
+    void Shader::CreateFromString(const std::string& vertexCode, const std::string& fragmentCode, GLFWwindow* myWindow)
     {
+        glfwMakeContextCurrent(myWindow);
         CompileShader(vertexCode, fragmentCode);
     }
 
-    void Shader::CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation)
+    void Shader::CreateFromFiles(const std::string& vertexLocation, const std::string& fragmentLocation, GLFWwindow* myWindow)
     {// Cria com base nos arquivos que foram informados.
+        glfwMakeContextCurrent(myWindow);
         std::string vertexString = ReadFile(vertexLocation);
         std::string fragmentString = ReadFile(fragmentLocation);
         std::string vertexCode = vertexString.c_str();

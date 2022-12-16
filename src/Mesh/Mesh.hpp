@@ -1,12 +1,12 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-#include "../Shader/Shader.hpp"
+#include "../../glad/glad.h"
+#include <GLFW/glfw3.h>
+
 #include "../Text/Text.hpp"
 #include "../Objects/Eng3D/Cube.hpp"
 
-#include "../../glad/glad.h"
-#include <GLFW/glfw3.h>
 #include <string>
 #include <vector>
 #include <cstdlib>
@@ -24,9 +24,13 @@ namespace mesh
         void SetWindow(GLFWwindow* myWindow);
 
         int AddMesh();
-        int AddCube(glm::vec3 pos, float length, shader::Shader s);
+        int AddCube(glm::vec3 pos, float length);
+
+
         int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
-        int UpdateMesh();
+        
+        
+        void UpdateObjectShader(int index, GLuint s);
         void EnableObject(int index);
         void DisableObject(int index);
         int DeleteMesh();
@@ -38,7 +42,6 @@ namespace mesh
         void RenderText(text::Text &tex, shader::Shader &s);
         // void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
 
-    private:
         GLFWwindow *myWindow = nullptr;
 
         std::vector<struct object::object> objects;

@@ -13,7 +13,7 @@
 
 namespace Eng3D
 {
-    struct object::object CreateCube(glm::vec3 pos, float length, shader::Shader s);
+    struct object::object CreateCube(glm::vec3 pos, float length);
 }
 
 #endif

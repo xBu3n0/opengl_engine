@@ -13,11 +13,11 @@ namespace mesh
         this->myWindow = myWindow;
     }
 
-    int Mesh::AddCube(glm::vec3 pos, float length, shader::Shader s)
+    int Mesh::AddCube(glm::vec3 pos, float length)
     {
         glfwMakeContextCurrent(myWindow);
 
-        objects.push_back(Eng3D::CreateCube(pos, length, s));
+        objects.push_back(Eng3D::CreateCube(pos, length));
 
         return SUCCESS;
     }
@@ -64,33 +64,26 @@ namespace mesh
 
     void Mesh::RenderObject(struct object::object& obj) 
     {
-        // std::cout << "Renderizando: VAO -> " << obj.VAO << ", VBO -> " << obj.VBO << ", IBO -> " << obj.IBO << '\n';
-        
+        glUseProgram(obj.s);
+
         if(obj.useIBO)
         {
-            obj.s.UseShader();
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
-            // 
             glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
-            // 
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
-
-            glUseProgram(0);
         }
         else
         {
-            obj.s.UseShader();
-
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
             glDrawArrays(obj.typeOfRendering, 0, obj.data.size());
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
-
-            glUseProgram(0);
         }
+
+        glUseProgram(0);
 
         return;
     }
@@ -142,6 +135,14 @@ namespace mesh
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+
+
+    void Mesh::UpdateObjectShader(int index, GLuint s)
+    {
+        objects[index].s = s;
+        return;
+    }
+
 
     void Mesh::EnableObject(int index)
     {
