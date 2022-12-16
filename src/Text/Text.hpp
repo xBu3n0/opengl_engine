@@ -1,6 +1,6 @@
 #ifndef TEXT_HPP
 #define TEXT_HPP
-
+/*
 #include <iostream>
 #include <vector>
 #include <string>
@@ -49,5 +49,5 @@ namespace text
 
     
 }
-
+*/
 #endif

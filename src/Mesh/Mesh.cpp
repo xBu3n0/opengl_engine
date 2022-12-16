@@ -22,6 +22,7 @@ namespace mesh
         return SUCCESS;
     }
 
+    /*
     int Mesh::AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
     {
         struct text::Text obj;
@@ -45,6 +46,7 @@ namespace mesh
 
         return SUCCESS;
     }
+    */
 
     int Mesh::AddMesh()
     {
@@ -88,6 +90,7 @@ namespace mesh
         return;
     }
 
+    /*
     void Mesh::RenderText(text::Text &tex, shader::Shader &s)
     {
         s.UseShader();
@@ -135,7 +138,7 @@ namespace mesh
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-
+    */
 
     void Mesh::UpdateObjectShader(int index, GLuint s)
     {

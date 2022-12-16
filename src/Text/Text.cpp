@@ -1,3 +1,4 @@
+/*
 #include "Text.hpp"
 
 namespace text
@@ -67,3 +68,4 @@ namespace text
         FT_Done_FreeType(ft);
     }
 }
+*/
