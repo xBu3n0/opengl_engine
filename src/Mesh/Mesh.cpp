@@ -69,9 +69,9 @@ namespace mesh
         glUseProgram(obj.s);
 
         if(obj.useIBO)
-        {
+        {   
             glBindVertexArray(obj.VAO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.IBO);
             glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);

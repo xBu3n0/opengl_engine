@@ -4,10 +4,9 @@ namespace Eng3D
 {
     struct object::object CreateCube(glm::vec3 pos, float length)
     {
-        GLuint VAO, VBO;
+        GLuint VAO, VBO, IBO;
 
-        /*
-        data = {
+        std::vector<GLfloat> data = {
             pos.x,          pos.y,          pos.z,
             pos.x+length,   pos.y,          pos.z,
             pos.x+length,   pos.y+length,   pos.z,
@@ -18,7 +17,7 @@ namespace Eng3D
             pos.x+length,   pos.y+length,   pos.z+length
         };
 
-        indexes = {
+        std::vector<uint> indexes = {
             0, 2, 1,
             0, 2, 4,
             0, 3, 1,
@@ -32,8 +31,8 @@ namespace Eng3D
             7, 4, 2,
             7, 4, 5
         };
-        */
 
+        /*
         std::vector<GLfloat> data = {
             -1.0f, -1.0f, 0.0f,
             1.0f, -1.0f, 0.0f,
@@ -41,9 +40,14 @@ namespace Eng3D
         };
 
         std::vector<GLuint> vertices;
+        */
 
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
+
+        glGenBuffers(1, &IBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
 
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -53,16 +57,19 @@ namespace Eng3D
         glEnableVertexAttribArray(0);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         glBindVertexArray(0);
+
+        std::cout << VAO << ' ' << VBO << ' ' << IBO << '\n';
 
         object::object obj = {
             VAO,
             VBO,
             (GLuint) data.size(),
-            0,
-            false,
-            (GLuint) vertices.size(),
+            IBO,
+            true,
+            (GLuint) indexes.size(),
             true,
             GL_TRIANGLES,
             data,
