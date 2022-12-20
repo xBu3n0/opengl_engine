@@ -14,10 +14,10 @@ namespace camera
         moveSpeed = startMoveSpeed;
         turnSpeed = startTurnSpeed;
 
-        update();
+        Update();
     }
 
-    void Camera::keyControl(bool* keys, GLfloat deltaTime)
+    void Camera::KeyControl(bool* keys, GLfloat deltaTime)
     {
         GLfloat velocity = moveSpeed * deltaTime;
 
@@ -47,7 +47,7 @@ namespace camera
         }
     }
 
-    void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
+    void Camera::MouseControl(GLfloat xChange, GLfloat yChange)
     {
         xChange *= turnSpeed;
         yChange *= turnSpeed;
@@ -65,15 +65,15 @@ namespace camera
             pitch = -89.0f;
         }
 
-        update();
+        Update();
     }
 
-    glm::mat4 Camera::calculateViewMatrix()
+    glm::mat4 Camera::CalculateViewMatrix()
     {
         return glm::lookAt(position, position + front, up);
     }
 
-    void Camera::update()
+    void Camera::Update()
     {
         front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
         front.y = sin(glm::radians(pitch));

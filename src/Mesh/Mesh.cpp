@@ -59,7 +59,7 @@ namespace mesh
     {
         for(struct object::object x : objects)
             if(x.willBeRendered)
-                RenderObject(x);
+                x.HowToRender(x);
         // for(text::Text x : texts)
         //     RenderText(x, s);
     }

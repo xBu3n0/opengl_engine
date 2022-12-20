@@ -29,6 +29,8 @@ namespace object
 
         std::vector<GLfloat> data;
         GLuint s;
+
+        void (*HowToRender)(struct object& obj);
     };
 }
 

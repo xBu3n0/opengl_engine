@@ -16,10 +16,10 @@ namespace camera
     public:
         Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed);
 
-        void keyControl(bool* keys, GLfloat deltaTime);
-        void mouseControl(GLfloat xChange, GLfloat yChange);
+        void KeyControl(bool* keys, GLfloat deltaTime);
+        void MouseControl(GLfloat xChange, GLfloat yChange);
 
-        glm::mat4 calculateViewMatrix();
+        glm::mat4 CalculateViewMatrix();
 
         ~Camera();
 
@@ -36,7 +36,7 @@ namespace camera
         GLfloat moveSpeed;
         GLfloat turnSpeed;
 
-        void update();
+        void Update();
     };
 }
 

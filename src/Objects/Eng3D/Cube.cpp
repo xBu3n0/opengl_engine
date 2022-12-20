@@ -2,6 +2,23 @@
 
 namespace Eng3D
 {
+    void HowToRender(struct object::object &obj)
+    {
+        glUseProgram(obj.s);
+
+        glBindVertexArray(obj.VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, obj.VBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.IBO);
+        glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        glUseProgram(0);
+
+        return;
+    }
+
     struct object::object CreateCube(glm::vec3 pos, float length)
     {
         GLuint VAO, VBO, IBO;
@@ -32,16 +49,6 @@ namespace Eng3D
             7, 4, 5
         };
 
-        /*
-        std::vector<GLfloat> data = {
-            -1.0f, -1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f
-        };
-
-        std::vector<GLuint> vertices;
-        */
-
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
@@ -61,7 +68,6 @@ namespace Eng3D
 
         glBindVertexArray(0);
 
-        std::cout << VAO << ' ' << VBO << ' ' << IBO << '\n';
 
         object::object obj = {
             VAO,
@@ -73,7 +79,8 @@ namespace Eng3D
             true,
             GL_TRIANGLES,
             data,
-            0
+            0,
+            HowToRender
         };
 
         return obj;

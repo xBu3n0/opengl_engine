@@ -58,6 +58,7 @@ int main()
 
     if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
     windows[1]->meshes.AddCube(glm::vec3(0.1f, 0.1f, 1.0f), 0.5);
+    windows[1]->meshes.AddCube(glm::vec3(-0.5f, -0.5f, 1.0f), 0.5);
     windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
 
     s[0].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
@@ -68,6 +69,7 @@ int main()
     s[1].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
                     "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag", windows[1]->GetWindow());
     windows[1]->meshes.UpdateObjectShader(0, s[1].GetShaderID());
+    windows[1]->meshes.UpdateObjectShader(1, s[1].GetShaderID());
 
     std::thread t(handleInput, std::ref(windows));
 
@@ -92,7 +94,7 @@ int main()
         // pstd::cout << "------------------------------" << std::endl;
         std::chrono::duration<double> elapsed_seconds = std::chrono::steady_clock::now() - start;
 
-        // std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
+        std::cout << '\t' << 1/elapsed_seconds.count() << std::endl;
     }
 
     t.join();
