@@ -57,8 +57,9 @@ int main()
 
 
     if(windows[1]->CreateWindow("Secondary", 300, 600, true, true) == window::FAILURE) return -1;
+    
+    windows[1]->meshes.AddCube(glm::vec3(-0.5f, -0.5f, 1.0f), 1.0);
     windows[1]->meshes.AddCube(glm::vec3(0.1f, 0.1f, 1.0f), 0.5);
-    windows[1]->meshes.AddCube(glm::vec3(-0.5f, -0.5f, 1.0f), 0.5);
     windows[1]->SetBackground(0.8, 0.1, 0.1, 1.0);
 
     s[0].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
