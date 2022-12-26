@@ -85,7 +85,5 @@ namespace window
             0, 0
         };
     };
-
-    void addWindow(std::vector<Window*>& window);
 }
 #endif

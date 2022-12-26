@@ -40,7 +40,7 @@ namespace shader
         void UseShader();
         // Retira o shader que está sendo utilizado.
         void ClearShader();
-
+        // Recebe o ShaderID para tirar informações sobre o shaders e variaveis que serão utilizadas.
         GLuint GetShaderID();
 
         // Apagar o shader

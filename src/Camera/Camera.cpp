@@ -22,29 +22,19 @@ namespace camera
         GLfloat velocity = moveSpeed * deltaTime;
 
         if(keys[GLFW_KEY_SPACE])
-        {// Boost de velocidade para se locomover mais rápido. 
             velocity += 2;
-        }
 
-        if (keys[GLFW_KEY_W])
-        {
+        if(keys[GLFW_KEY_W])
             position += front * velocity;
-        }
 
-        if (keys[GLFW_KEY_S])
-        {
+        if(keys[GLFW_KEY_S])
             position -= front * velocity;
-        }
 
-        if (keys[GLFW_KEY_A])
-        {
+        if(keys[GLFW_KEY_A])
             position -= right * velocity;
-        }
 
-        if (keys[GLFW_KEY_D])
-        {
+        if(keys[GLFW_KEY_D])
             position += right * velocity;
-        }
     }
 
     void Camera::MouseControl(GLfloat xChange, GLfloat yChange)
@@ -55,15 +45,11 @@ namespace camera
         yaw += xChange;
         pitch += yChange;
 
-        if (pitch > 89.0f)
-        {
+        if(pitch > 89.0f)
             pitch = 89.0f;
-        }
 
-        if (pitch < -89.0f)
-        {
+        if(pitch < -89.0f)
             pitch = -89.0f;
-        }
 
         Update();
     }

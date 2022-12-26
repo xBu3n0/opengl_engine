@@ -56,8 +56,6 @@ namespace window
             glfwSetCursorPosCallback(myWindow, HandleMouse);
 
             return SUCCESS;
-
-            return SUCCESS;
         }
 
         std::cout << "A janela já foi inicializada.\n";
@@ -85,7 +83,7 @@ namespace window
 
             meshes.SetWindow(myWindow);
             glfwMakeContextCurrent(myWindow);
-            // glfwSwapInterval(0);
+            glfwSwapInterval(0);
 
             if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
             {
@@ -115,17 +113,11 @@ namespace window
     {
         window::Window* theWindow = static_cast<window::Window*>(glfwGetWindowUserPointer(window));
 
-        if (key >= 0 && key < 1024)
-        {
-            if (action == GLFW_PRESS)
-            {
+        if(key >= 0 && key < 1024)
+            if(action == GLFW_PRESS)
                 theWindow->keys[key] = true;
-            }
-            else if (action == GLFW_RELEASE)
-            {
+            else if(action == GLFW_RELEASE)
                 theWindow->keys[key] = false;
-            }
-        }
 
         return;
     }
@@ -144,7 +136,7 @@ namespace window
     {
         window::Window* theWindow = static_cast<window::Window*>(glfwGetWindowUserPointer(window));
 
-        if (theWindow->mouseInfo.mouseFirstMoved)
+        if(theWindow->mouseInfo.mouseFirstMoved)
         {
             theWindow->mouseInfo.lastX = xPos;
             theWindow->mouseInfo.lastY = yPos;
@@ -161,6 +153,7 @@ namespace window
     int Window::Render()
     {
         glfwMakeContextCurrent(myWindow);
+        
         if(glfwWindowShouldClose(myWindow))
         {
             std::cout << "Uma janela foi fechada\n";

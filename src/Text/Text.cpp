@@ -5,14 +5,14 @@ namespace text
 {
     Text::Text()
     {
-        if (FT_Init_FreeType(&ft))
+        if(FT_Init_FreeType(&ft))
             std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
-        if (FT_New_Face(ft, "/usr/share/fonts/TTF/AkaashNormal.ttf", 0, &face))
+        if(FT_New_Face(ft, "/usr/share/fonts/TTF/AkaashNormal.ttf", 0, &face))
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
         FT_Set_Pixel_Sizes(face, 0, 48);
-        if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
+        if(FT_Load_Char(face, 'X', FT_LOAD_RENDER))
             std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 
         // set size to load glyphs as
@@ -22,10 +22,10 @@ namespace text
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         // load first 128 characters of ASCII set
-        for (unsigned char c = 0; c < 128; c++)
+        for(unsigned char c = 0; c < 128; c++)
         {
             // Load character glyph 
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+            if(FT_Load_Char(face, c, FT_LOAD_RENDER))
             {
                 std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
                 continue;

@@ -36,13 +36,13 @@ namespace shader
         std::string content;
         std::ifstream fileStream(fileLocation, std::ios::in);
 
-        if (!fileStream.is_open()) {
+        if(!fileStream.is_open()) {
             std::cout << "Failed to read " << fileLocation << "! File doesn't exist." << std::endl;
             return "";
         }
 
         std::string line = "";
-        while (!fileStream.eof())
+        while(!fileStream.eof())
         {
             std::getline(fileStream, line);
             content.append(line + "\n");
@@ -56,7 +56,7 @@ namespace shader
     {
         ShaderID = glCreateProgram();
 
-        if (!ShaderID)
+        if(!ShaderID)
         {
             printf("Error creating shader program!\n");
             return;
@@ -70,7 +70,7 @@ namespace shader
 
         glLinkProgram(ShaderID);
         glGetProgramiv(ShaderID, GL_LINK_STATUS, &result);
-        if (!result)
+        if(!result)
         {
             glGetProgramInfoLog(ShaderID, sizeof(eLog), NULL, eLog);
             printf("Error linking program: '%s'\n", eLog);
@@ -79,7 +79,7 @@ namespace shader
 
         glValidateProgram(ShaderID);
         glGetProgramiv(ShaderID, GL_VALIDATE_STATUS, &result);
-        if (!result)
+        if(!result)
         {
             glGetProgramInfoLog(ShaderID, sizeof(eLog), NULL, eLog);
             printf("Error validating program: '%s'\n", eLog);
@@ -99,7 +99,7 @@ namespace shader
 
     void Shader::ClearShader()
     {
-        if (ShaderID != 0)
+        if(ShaderID != 0)
         {
             glDeleteProgram(ShaderID);
             ShaderID = 0;
@@ -124,7 +124,7 @@ namespace shader
         GLchar eLog[1024] = { 0 };
 
         glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-        if (!result)
+        if(!result)
         {
             glGetShaderInfoLog(theShader, sizeof(eLog), NULL, eLog);
             printf("Error compiling the %d shader: '%s'\n", shaderType, eLog);
