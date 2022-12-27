@@ -1,6 +1,6 @@
 #ifndef TEXT_HPP
 #define TEXT_HPP
-/*
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -39,15 +39,16 @@ namespace text
     
     public:
         Character c;
+        GLuint s;
         std::map<char, Character> Characters;
-    
+
     
     private:
         FT_Library ft;
         FT_Face face;
     };
 
-    
+    void setShader(Text& t, GLuint shader);
 }
-*/
+
 #endif

@@ -22,15 +22,17 @@ void handleInput(std::map<std::string, window::Window*>& windows)
 
     while(!windows.empty())
     {
-        ++i;
-
         std::this_thread::sleep_for(100ms);
     
-        if(i == 50)
-            if(windows.count("Primary"))
-                windows["Primary"]->meshes.UpdateObjectShader(0, 0);
-            else
-                std::cout << "A janela foi fechada antes de atualizar o shader do cubo." << std::endl;
+        if(i != windows.size())
+        {
+            system("clear");
+            i = windows.size();
+
+            std::cout << "Janelas abertas:" << std::endl;
+            for(auto x : windows)
+                std::cout << "\t" << x.first << std::endl;
+        }
     }
 
     return;
@@ -43,7 +45,6 @@ int main()
         std::cout << "Erro na inicialização do GLFW" << std::endl;
         return -1;
     }
-
 
     std::map<std::string, window::Window*> windows;
     std::stack<std::string> willBeClosed;
@@ -68,11 +69,18 @@ int main()
                         "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag", windows["Primary"]->GetWindow());
     windows["Primary"]->meshes.UpdateObjectShader(0, s[0].GetShaderID());
 
-
     s[1].CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/shader.vert",
                         "/home/bueno/Área de trabalho/OPENGL/shaders/shader.frag", windows["Secondary"]->GetWindow());
     windows["Secondary"]->meshes.UpdateObjectShader(0, s[1].GetShaderID());
     windows["Secondary"]->meshes.UpdateObjectShader(1, s[1].GetShaderID());
+
+
+    windows["Primary"]->meshes.AddText("Oi mundo!", glm::vec2(10.0f, 10.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    shader::Shader tShader;
+    tShader.CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/tShader.vert",
+                            "/home/bueno/Área de trabalho/OPENGL/shaders/tShader.frag", windows["Primary"]->GetWindow());
+    windows["Primary"]->meshes.UpdateTextShader(0, tShader.GetShaderID());
+
 
     std::thread t(handleInput, std::ref(windows));
 
@@ -91,10 +99,12 @@ int main()
 
         std::chrono::duration<double> elapsed_seconds = std::chrono::steady_clock::now() - start;
 
-        std::cout << "\tFPS: " << 1/elapsed_seconds.count() << std::endl;
+        // std::cout << "\tFPS: " << 1/elapsed_seconds.count() << std::endl;
     }
 
     t.join();
+
+    system("clear");
 
     glfwTerminate();
     return 0;

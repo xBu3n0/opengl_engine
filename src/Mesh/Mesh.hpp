@@ -31,6 +31,8 @@ namespace mesh
         
         
         void UpdateObjectShader(int index, GLuint s);
+        void UpdateTextShader(int index, GLuint s);
+
         void EnableObject(int index);
         void DisableObject(int index);
         int DeleteMesh();
@@ -39,13 +41,13 @@ namespace mesh
 
     private:
         void RenderObject(struct object::object& obj);
-        // void RenderText(text::Text &tex, shader::Shader &s);
-        // void RenderText(text::Text &tex, shader::Shader &s, std::string& text, float x, float y, float scale, glm::vec3 color);
+        void RenderText(text::Text &tex);
+        void RenderText(text::Text &tex, std::string& text, float x, float y, float scale, glm::vec3 color);
 
         GLFWwindow *myWindow = nullptr;
 
         std::vector<struct object::object> objects;
-        // std::vector<text::Text> texts;
+        std::vector<text::Text> texts;
     };
 }
 

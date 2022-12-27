@@ -1,4 +1,3 @@
-/*
 #include "Text.hpp"
 
 namespace text
@@ -67,5 +66,10 @@ namespace text
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
     }
+
+    void setShader(Text &t, GLuint shader)
+    {
+        t.s = shader;
+        return;
+    }
 }
-*/

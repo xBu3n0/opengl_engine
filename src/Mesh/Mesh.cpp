@@ -22,9 +22,10 @@ namespace mesh
         return SUCCESS;
     }
 
-    /*
     int Mesh::AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
     {
+        glfwMakeContextCurrent(myWindow);
+
         struct text::Text obj;
 
         obj.c.text  = text;
@@ -46,7 +47,6 @@ namespace mesh
 
         return SUCCESS;
     }
-    */
 
     int Mesh::AddMesh()
     {
@@ -60,8 +60,8 @@ namespace mesh
         for(struct object::object x : objects)
             if(x.willBeRendered)
                 x.HowToRender(x);
-        // for(text::Text x : texts)
-        //     RenderText(x, s);
+        for(text::Text x : texts)
+            RenderText(x);
     }
 
     void Mesh::RenderObject(struct object::object& obj) 
@@ -90,22 +90,26 @@ namespace mesh
         return;
     }
 
-    /*
-    void Mesh::RenderText(text::Text &tex, shader::Shader &s)
+    
+    void Mesh::RenderText(text::Text &tex)
     {
-        s.UseShader();
+        glUseProgram(tex.s);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         // activate corresponding render state
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(600), 0.0f, static_cast<float>(400));
-        glUniformMatrix4fv(glGetUniformLocation(s.GetShaderID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(tex.s, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         
-        glUniform3f(glGetUniformLocation(s.GetShaderID(), "textColor"), tex.c.color.x, tex.c.color.y, tex.c.color.z);
+        glUniform3f(glGetUniformLocation(tex.s, "textColor"), tex.c.color.x, tex.c.color.y, tex.c.color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(tex.c.VAO);
 
         // iterate through all characters
         std::string::const_iterator c;
 
-        for (c = tex.c.text.begin(); c != tex.c.text.end(); c++)
+        for(c = tex.c.text.begin(); c != tex.c.text.end(); c++)
         {
             text::Character ch = tex.Characters[*c];
             float xpos = tex.c.pos.x + ch.Bearing.x * tex.c.scale;
@@ -138,11 +142,17 @@ namespace mesh
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-    */
+    
 
     void Mesh::UpdateObjectShader(int index, GLuint s)
     {
         objects[index].s = s;
+        return;
+    }
+
+    void Mesh::UpdateTextShader(int index, GLuint s)
+    {
+        texts[index].s = s;
         return;
     }
 
