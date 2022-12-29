@@ -2,7 +2,7 @@
 
 namespace Eng3D
 {
-    void HowToRender(struct object::object &obj)
+    void HowToRender(struct object::object &obj, bool* keys, struct input::mouse* mouseInfo)
     {
         glUseProgram(obj.s);
 

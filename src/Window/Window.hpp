@@ -1,8 +1,8 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-#include "../Input/Input.hpp"
 #include "../Mesh/Mesh.hpp"
+#include "../Input/Input.hpp"
 
 #include <GL/gl.h>
 #include <GL/glext.h>
@@ -22,12 +22,6 @@ namespace window
     const int OPENED            = 4;
 
     const int ALREADY_EXISTS    = 5;
-
-    struct mouse
-    {
-        bool mouseFirstMoved;
-        GLfloat xChange, yChange, lastX, lastY;
-    };
 
     class Window
     {
@@ -49,12 +43,6 @@ namespace window
         int GetStatus();
         // Retorna o endereço da janela
         GLFWwindow *GetWindow();
-
-    public:
-        //Handle inputs
-        bool* GetKeys();
-        struct mouse* GetMouse();
-        
         //Meshes
         mesh::Mesh meshes;
 
@@ -74,16 +62,7 @@ namespace window
 
 
         //Inputs
-        static void HandleKeys(GLFWwindow* window, int key, int code, int action, int mode);
-        static void HandleMouse(GLFWwindow* window, double xPos, double yPos);
-
-    private:
-        bool keys[1024];
-        struct mouse mouseInfo = {
-            true,
-            0, 0,
-            0, 0
-        };
+        input::Input *input = nullptr;
     };
 }
 #endif

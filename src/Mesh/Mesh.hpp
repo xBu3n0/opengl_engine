@@ -1,11 +1,8 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-#include "../../glad/glad.h"
-#include <GLFW/glfw3.h>
-
-#include "../Text/Text.hpp"
 #include "../Objects/Eng3D/Cube.hpp"
+#include "../Text/Text.hpp"
 
 #include <string>
 #include <vector>
@@ -37,7 +34,7 @@ namespace mesh
         void DisableObject(int index);
         int DeleteMesh();
 
-        void Render();
+        void Render(bool* keys,struct input::mouse* mouseInfo);
 
     private:
         void RenderObject(struct object::object& obj);

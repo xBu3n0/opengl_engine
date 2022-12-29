@@ -37,7 +37,7 @@ namespace window
             status = OPENED;
 
             glfwMakeContextCurrent(myWindow);
-            // glfwSwapInterval(0);
+            glfwSwapInterval(1);
 
             if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
             {
@@ -45,15 +45,9 @@ namespace window
                 return status;
             }
 
-            for(int i = 0; i < 1024; ++i)
-                this->keys[i] = false;
-
             status = OPENED;
 
-            glfwSetWindowUserPointer(myWindow, this);
-
-            glfwSetKeyCallback(myWindow, HandleKeys);
-            glfwSetCursorPosCallback(myWindow, HandleMouse);
+            input = new input::Input(myWindow);
 
             return SUCCESS;
         }
@@ -83,7 +77,7 @@ namespace window
 
             meshes.SetWindow(myWindow);
             glfwMakeContextCurrent(myWindow);
-            glfwSwapInterval(0);
+            glfwSwapInterval(1);
 
             if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
             {
@@ -91,63 +85,15 @@ namespace window
                 return status;
             }
 
-            for(int i = 0; i < 1024; ++i)
-                this->keys[i] = false;
-
-
             status = OPENED;
 
-            glfwSetWindowUserPointer(myWindow, this);
-
-            glfwSetKeyCallback(myWindow, HandleKeys);
-            glfwSetCursorPosCallback(myWindow, HandleMouse);
+            input = new input::Input(myWindow);
 
             return SUCCESS;
         }
 
         std::cout << "A janela já foi inicializada.\n";
         return ALREADY_EXISTS;
-    }
-
-    void Window::HandleKeys(GLFWwindow* window, int key, int code, int action, int mode)
-    {
-        window::Window* theWindow = static_cast<window::Window*>(glfwGetWindowUserPointer(window));
-
-        if(key >= 0 && key < 1024)
-            if(action == GLFW_PRESS)
-                theWindow->keys[key] = true;
-            else if(action == GLFW_RELEASE)
-                theWindow->keys[key] = false;
-
-        return;
-    }
-
-    bool* Window::GetKeys()
-    {
-        return keys;
-    }
-
-    struct mouse* Window::GetMouse()
-    {
-        return &mouseInfo;
-    }
-
-    void Window::HandleMouse(GLFWwindow* window, double xPos, double yPos)
-    {
-        window::Window* theWindow = static_cast<window::Window*>(glfwGetWindowUserPointer(window));
-
-        if(theWindow->mouseInfo.mouseFirstMoved)
-        {
-            theWindow->mouseInfo.lastX = xPos;
-            theWindow->mouseInfo.lastY = yPos;
-            theWindow->mouseInfo.mouseFirstMoved = false;
-        }
-
-        theWindow->mouseInfo.xChange = xPos - theWindow->mouseInfo.lastX;
-        theWindow->mouseInfo.yChange = theWindow->mouseInfo.lastY - yPos;
-
-        theWindow->mouseInfo.lastX = xPos;
-        theWindow->mouseInfo.lastY = yPos;
     }
 
     int Window::Render()
@@ -167,9 +113,9 @@ namespace window
         glClear(GL_COLOR_BUFFER_BIT);
 
         glfwGetFramebufferSize(myWindow, &width, &height);
-        glViewport(0, 0, width, height);
+        // glViewport(0, 0, width, height);
 
-        meshes.Render();
+        meshes.Render(input->GetKeys(), input->GetMouse());
 
         glfwSwapBuffers(myWindow);
         glfwPollEvents();

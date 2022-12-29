@@ -4,6 +4,9 @@
 #include <vector>
 
 #include "../Shader/Shader.hpp"
+
+#include "../Input/Input.hpp"
+
 #include "../../glad/glad.h"
 #include <GLFW/glfw3.h>
 
@@ -30,7 +33,7 @@ namespace object
         std::vector<GLfloat> data;
         GLuint s;
 
-        void (*HowToRender)(struct object& obj);
+        void (*HowToRender)(struct object& obj, bool* keys, struct input::mouse* mouseInfo);
     };
 }
 

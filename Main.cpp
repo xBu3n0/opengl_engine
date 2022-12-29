@@ -75,7 +75,7 @@ int main()
     windows["Secondary"]->meshes.UpdateObjectShader(1, s[1].GetShaderID());
 
 
-    windows["Primary"]->meshes.AddText("Oi mundo!", glm::vec2(10.0f, 10.0f), 1.0f, glm::vec3(0.0f, 0.0f, 0.0f));
+    windows["Primary"]->meshes.AddText("Este é um texto renderizado usando FREETYPE", glm::vec2(10.0f, 10.0f), 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
     shader::Shader tShader;
     tShader.CreateFromFiles("/home/bueno/Área de trabalho/OPENGL/shaders/tShader.vert",
                             "/home/bueno/Área de trabalho/OPENGL/shaders/tShader.frag", windows["Primary"]->GetWindow());

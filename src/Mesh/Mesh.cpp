@@ -55,11 +55,11 @@ namespace mesh
         return SUCCESS;   
     }
 
-    void Mesh::Render()
+    void Mesh::Render(bool* keys, struct input::mouse* mouseInfo)
     {
         for(struct object::object x : objects)
             if(x.willBeRendered)
-                x.HowToRender(x);
+                x.HowToRender(x, keys, mouseInfo);
         for(text::Text x : texts)
             RenderText(x);
     }
