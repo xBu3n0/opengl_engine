@@ -4,8 +4,11 @@
 #include "../Mesh/Mesh.hpp"
 #include "../Input/Input.hpp"
 
+#if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
+#include <windows.h>
+#endif
 #include <GL/gl.h>
-#include <GL/glext.h>
+// #include <GL/glext.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -32,9 +35,9 @@ namespace window
         ~Window();
 
         // Cria uma janela pré-definida
-        int CreateWindow();
+        int InitWindow();
         // Cria uma janela com as especificações fornecidas (armazenado na variavel myWindow)
-        int CreateWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen);
+        int InitWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen);
         // Cor do plano de fundo
         void SetBackground(float red, float green, float blue, float alpha);
         // Renderiza a cena

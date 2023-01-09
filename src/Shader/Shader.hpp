@@ -11,8 +11,12 @@
 #include <string.h>
 #include <fstream>
 
+#include <map>
 #include <iostream>
 
+#if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
+#include <windows.h>
+#endif
 #include "../../glad/glad.h"
 #include <GLFW/glfw3.h>
 
@@ -32,9 +36,8 @@ namespace shader
         std::string ReadFile(const std::string& fileLocation);
 
         // Ver uma forma de pegar inputs de maneira menos estática como está aqui.
-        GLuint GetProjectionLocation();
-        GLuint GetModelLocation();
-        GLuint GetViewLocation();
+        std::map<std::string, std::string> in;
+        std::map<std::string, std::string> layout;
 
         // Habilita o Shader para ser utilizado  
         void UseShader();

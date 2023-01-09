@@ -1,5 +1,4 @@
 #include "Camera.hpp"
-#include <GLFW/glfw3.h>
 
 namespace camera
 {

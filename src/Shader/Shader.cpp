@@ -5,7 +5,6 @@
 */
 
 #include "Shader.hpp"
-#include <GLFW/glfw3.h>
 
 namespace shader
 {
@@ -115,7 +114,7 @@ namespace shader
         theCode[0] = shaderCode.data();
 
         GLint codeLength[1];
-        codeLength[0] = shaderCode.size();
+        codeLength[0] = static_cast<GLint>(shaderCode.size());
 
         glShaderSource(theShader, 1, theCode, codeLength);
         glCompileShader(theShader);

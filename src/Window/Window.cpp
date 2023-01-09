@@ -22,7 +22,7 @@ namespace window
         status = CLOSED;    
     }
 
-    int Window::CreateWindow()
+    int Window::InitWindow()
     {
         if(status == UNINITIALIZED)
         {
@@ -56,7 +56,7 @@ namespace window
         return ALREADY_EXISTS;
     }
 
-    int Window::CreateWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen)
+    int Window::InitWindow(const std::string& title, int width, int height, bool isResizable, bool isFullscreen)
     {
         if(status == UNINITIALIZED)
         {
@@ -77,7 +77,7 @@ namespace window
 
             meshes.SetWindow(myWindow);
             glfwMakeContextCurrent(myWindow);
-            glfwSwapInterval(1);
+            glfwSwapInterval(0);
 
             if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
             {

@@ -34,7 +34,7 @@ namespace Eng3D
             pos.x+length,   pos.y+length,   pos.z+length
         };
 
-        std::vector<uint> indexes = {
+        std::vector<unsigned int> indexes = {
             0, 2, 1,
             0, 2, 4,
             0, 3, 1,
@@ -54,7 +54,7 @@ namespace Eng3D
 
         glGenBuffers(1, &IBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexes.size(), indexes.data(), GL_STATIC_DRAW);
 
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);

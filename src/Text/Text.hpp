@@ -6,6 +6,9 @@
 #include <string>
 #include <map>
 
+#if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
+#include <windows.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <ft2build.h>
@@ -21,15 +24,15 @@ namespace text
     {
         GLuint VAO, VBO;
 
-        unsigned int TextureID; // ID handle of the glyph texture
-        glm::ivec2 Size; // Size of glyph
-        glm::ivec2 Bearing; // Offset from baseline to left/top of glyph
-        unsigned int Advance; // Offset to advance to next glyph
+        unsigned int TextureID = 0; // ID handle of the glyph texture
+        glm::ivec2 Size = glm::ivec2(0.0f, 0.0f); // Size of glyph
+        glm::ivec2 Bearing = glm::ivec2(0.0f, 0.0f); // Offset from baseline to left/top of glyph
+        unsigned int Advance = 0; // Offset to advance to next glyph
 
-        std::string text;
-        glm::vec2 pos;
-        float scale;
-        glm::vec3 color;
+        std::string text = "";
+        glm::vec2 pos = glm::vec2(0.0f, 0.0f);
+        float scale = 1.0f;
+        glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
     };
 
     class Text

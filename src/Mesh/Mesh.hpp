@@ -20,31 +20,33 @@ namespace mesh
         Mesh();
         void SetWindow(GLFWwindow* myWindow);
 
-        int AddMesh();
-        int AddCube(glm::vec3 pos, float length);
+        int AddCube(glm::vec3 pos, float length, std::string object_name);
 
 
-        int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color);
+        int AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color, std::string name);
         
         
-        void UpdateObjectShader(int index, GLuint s);
-        void UpdateTextShader(int index, GLuint s);
+        int UpdateObjectShader(const char* name, GLuint s);
 
-        void EnableObject(int index);
-        void DisableObject(int index);
-        int DeleteMesh();
+        int UpdateTextData(const char* name, const char* text);
+        int UpdateTextShader(const char* name, GLuint s);
+
+        int EnableObject(const char* name);
+        int DisableObject(const char* name);
+        int DeleteMesh(const char* name);
 
         void Render(bool* keys,struct input::mouse* mouseInfo);
+
+    public:
+        std::map<std::string, struct object::object> objects;
+        std::map<std::string, text::Text> texts;
 
     private:
         void RenderObject(struct object::object& obj);
         void RenderText(text::Text &tex);
-        void RenderText(text::Text &tex, std::string& text, float x, float y, float scale, glm::vec3 color);
+        // void RenderText(text::Text &tex, std::string& text, float x, float y, float scale, glm::vec3 color);
 
-        GLFWwindow *myWindow = nullptr;
-
-        std::vector<struct object::object> objects;
-        std::vector<text::Text> texts;
+        GLFWwindow* myWindow = nullptr;
     };
 }
 

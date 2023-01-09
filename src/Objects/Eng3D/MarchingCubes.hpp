@@ -1,11 +1,12 @@
 #ifndef MARCHINGCUBES_HPP
 #define MARCHINGCUBES_HPP
 
-/*
-Source das tabelas + referência:
-http://paulbourke.net/geometry/polygonise/ 
-*/
+// Source das tabelas + referência:
+// http://paulbourke.net/geometry/polygonise/ 
 
+#if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
+#include <windows.h>
+#endif
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -25,8 +26,10 @@ namespace marchingCubes
 
     void evalGrid(GRIDCELL grid, std::vector<GLfloat> &triangles);
 
+    /*
     void createMCubes(GLfloat (*function)(glm::vec3 pos),
                     glm::vec3 startPoint, glm::vec3 endPoint, uint n_partitions);
-}
+    */
+    }
 
 #endif

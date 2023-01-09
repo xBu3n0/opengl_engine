@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Arquivos de Origem">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Recurso">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\fonts">
+      <UniqueIdentifier>{12b8571a-a0f5-4e1f-a6a3-6885df5c5989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\glad">
+      <UniqueIdentifier>{0349b400-0b74-44ba-a33b-b8f845fe67f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src">
+      <UniqueIdentifier>{776d0699-d44d-4232-8a53-fe448fa31270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\shaders">
+      <UniqueIdentifier>{2829dea0-1954-4119-8f10-5d168a49ff57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\KHR">
+      <UniqueIdentifier>{892ff17e-f77c-49c6-9d46-4c0564ec6445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Input">
+      <UniqueIdentifier>{f589edfb-e100-4997-8869-beca4ac42c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Camera">
+      <UniqueIdentifier>{737bc873-1892-4294-9c19-c302cb6eb1f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Mesh">
+      <UniqueIdentifier>{47a7c3b0-b123-41c3-b50e-ef7b2fd854ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Objects">
+      <UniqueIdentifier>{d9fac606-a1c7-4923-97f0-61ad15e2251d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Objects\Eng3D">
+      <UniqueIdentifier>{682753e7-fbf4-497d-b69c-4a9ada65ee40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Objects\Eng2D">
+      <UniqueIdentifier>{3efbface-777a-4c76-b7ab-da020f894eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Shader">
+      <UniqueIdentifier>{6bf37072-5f5b-4f66-a2d7-e431b408b4cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Text">
+      <UniqueIdentifier>{a125516a-12f3-47e9-8faa-4de45c7b6f5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Thread">
+      <UniqueIdentifier>{d2bde5a7-a6c4-4606-aa91-66d6852d36a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\src\Window">
+      <UniqueIdentifier>{dbc8941f-9ec1-4697-a841-4f005907ce57}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="glad.c">
+      <Filter>Arquivos de Recurso</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Arquivos de Recurso</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\Input.cpp">
+      <Filter>Arquivos de Recurso\src\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\Camera.cpp">
+      <Filter>Arquivos de Recurso\src\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh\Mesh.cpp">
+      <Filter>Arquivos de Recurso\src\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Eng3D\Cube.cpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Eng3D\MarchingCubes.cpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader\Shader.cpp">
+      <Filter>Arquivos de Recurso\src\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Text\Text.cpp">
+      <Filter>Arquivos de Recurso\src\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Thread\Thread.cpp">
+      <Filter>Arquivos de Recurso\src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window\Window.cpp">
+      <Filter>Arquivos de Recurso\src\Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Main">
+      <Filter>Arquivos de Recurso</Filter>
+    </None>
+    <None Include="makefile">
+      <Filter>Arquivos de Recurso</Filter>
+    </None>
+    <None Include="shaders\shader.frag">
+      <Filter>Arquivos de Recurso\shaders</Filter>
+    </None>
+    <None Include="shaders\shader.vert">
+      <Filter>Arquivos de Recurso\shaders</Filter>
+    </None>
+    <None Include="shaders\tShader.frag">
+      <Filter>Arquivos de Recurso\shaders</Filter>
+    </None>
+    <None Include="shaders\tShader.vert">
+      <Filter>Arquivos de Recurso\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\Arialn.ttf">
+      <Filter>Arquivos de Recurso\fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="glad\glad.h">
+      <Filter>Arquivos de Recurso\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="KHR\khrplatform.h">
+      <Filter>Arquivos de Recurso\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\Input.hpp">
+      <Filter>Arquivos de Recurso\src\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera\Camera.hpp">
+      <Filter>Arquivos de Recurso\src\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mesh\Mesh.hpp">
+      <Filter>Arquivos de Recurso\src\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Object.hpp">
+      <Filter>Arquivos de Recurso\src\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Eng3D\Cube.hpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Eng3D\MarchingCubes.hpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader\Shader.hpp">
+      <Filter>Arquivos de Recurso\src\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Text\Text.hpp">
+      <Filter>Arquivos de Recurso\src\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Thread\Thread.hpp">
+      <Filter>Arquivos de Recurso\src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Window.hpp">
+      <Filter>Arquivos de Recurso\src\Window</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -302,7 +302,7 @@ namespace marchingCubes
 
 
 
-
+    /*
     void createMCubes(GLfloat (*f)(glm::vec3 pos),
                     glm::vec3 startPoint, glm::vec3 endPoint, uint n_partitions)
     {
@@ -353,6 +353,7 @@ namespace marchingCubes
 
         return;
     }
+    */
 
     void evalGrid(GRIDCELL grid, std::vector<GLfloat> &triangles)
     {
@@ -370,11 +371,11 @@ namespace marchingCubes
         if(grid.val[6] >= isolevel) cubeindex |= 64;
         if(grid.val[7] >= isolevel) cubeindex |= 128;
 
-        /* Cube is entirely in/out of the surface */
+        // Cube is entirely in/out of the surface
         if(edgeTable[cubeindex] == 0)
             return;
 
-        /* Find the vertices where the surface intersects the cube */
+        // Find the vertices where the surface intersects the cube
         if(edgeTable[cubeindex] & 1)
             vertlist[0] = vertexInterp(isolevel, grid.p[0], grid.p[1], grid.val[0], grid.val[1]);
         if(edgeTable[cubeindex] & 2)
@@ -400,7 +401,7 @@ namespace marchingCubes
         if(edgeTable[cubeindex] & 2048)
             vertlist[11] = vertexInterp(isolevel, grid.p[3], grid.p[7], grid.val[3], grid.val[7]);
 
-        /* Create the triangle */
+        // Create the triangle
         for(int i = 0; triTable[cubeindex][i] != -1; i += 3)
         {
             triangles.push_back(vertlist[triTable[cubeindex][i  ]].x);
@@ -422,10 +423,10 @@ namespace marchingCubes
     glm::vec3 vertexInterp(double isolevel, glm::vec3 u, glm::vec3 v, GLfloat u_val, GLfloat v_val)
     {
         // Visual de voxel. 
-        // return (u+v)/2.0f;
+        return (u+v)/2.0f;
 
         // Visual mais liso.
-        GLfloat zero = -u_val/(v_val - u_val);
-        return u + zero * (v-u);
+        // GLfloat zero = -u_val/(v_val - u_val);
+        // return u + zero * (v-u);
     }
 }

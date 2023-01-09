@@ -4,29 +4,27 @@
 namespace mesh
 {
     Mesh::Mesh()
-    {
-        
-    }
+    {}
 
     void Mesh::SetWindow(GLFWwindow *myWindow)
     {
         this->myWindow = myWindow;
     }
 
-    int Mesh::AddCube(glm::vec3 pos, float length)
+    int Mesh::AddCube(glm::vec3 pos, float length, std::string object_name)
     {
         glfwMakeContextCurrent(myWindow);
 
-        objects.push_back(Eng3D::CreateCube(pos, length));
+        objects[object_name] = Eng3D::CreateCube(pos, length);
 
         return SUCCESS;
     }
-
-    int Mesh::AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color)
+    
+    int Mesh::AddText(std::string text, glm::vec2 pos, float scale, glm::vec3 color, std::string name)
     {
         glfwMakeContextCurrent(myWindow);
 
-        struct text::Text obj;
+        text::Text obj;
 
         obj.c.text  = text;
         obj.c.pos   = pos;
@@ -43,25 +41,18 @@ namespace mesh
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
-        texts.push_back(obj);
+        texts[name] = obj;
 
         return SUCCESS;
     }
 
-    int Mesh::AddMesh()
-    {
-
-
-        return SUCCESS;   
-    }
-
     void Mesh::Render(bool* keys, struct input::mouse* mouseInfo)
     {
-        for(struct object::object x : objects)
-            if(x.willBeRendered)
-                x.HowToRender(x, keys, mouseInfo);
-        for(text::Text x : texts)
-            RenderText(x);
+        for(std::pair<std::string, struct object::object> x : objects)
+            if(x.second.willBeRendered)
+                x.second.HowToRender(x.second, keys, mouseInfo);
+        for(std::pair<std::string, text::Text> x : texts)
+            RenderText(x.second);
     }
 
     void Mesh::RenderObject(struct object::object& obj) 
@@ -80,7 +71,7 @@ namespace mesh
         {
             glBindVertexArray(obj.VAO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
-            glDrawArrays(obj.typeOfRendering, 0, obj.data.size());
+            glDrawArrays(obj.typeOfRendering, 0, static_cast<GLsizei>(obj.data.size()));
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
         }
@@ -90,7 +81,6 @@ namespace mesh
         return;
     }
 
-    
     void Mesh::RenderText(text::Text &tex)
     {
         glUseProgram(tex.s);
@@ -142,27 +132,59 @@ namespace mesh
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-    
 
-    void Mesh::UpdateObjectShader(int index, GLuint s)
+    int Mesh::UpdateObjectShader(const char* name, GLuint s)
     {
-        objects[index].s = s;
-        return;
+        if (objects.count(name))
+            objects[name].s = s;
+        else
+            return FAILURE;
+        return SUCCESS;
     }
 
-    void Mesh::UpdateTextShader(int index, GLuint s)
+    int Mesh::UpdateTextData(const char* name, const char* text)
     {
-        texts[index].s = s;
-        return;
+        if (texts.count(name))
+            texts[name].c.text = text;
+        else
+            return FAILURE;
+        return SUCCESS;
+    }
+
+    int Mesh::UpdateTextShader(const char* name, GLuint s)
+    {
+        if (texts.count(name))
+            texts[name].s = s;
+        else
+            return FAILURE;
+        return SUCCESS;
     }
 
 
-    void Mesh::EnableObject(int index)
+    int Mesh::EnableObject(const char* name)
     {
-        objects[index].willBeRendered = true;
+        if (objects.count(name))
+            objects[name].willBeRendered = true;
+        else
+            return FAILURE;
+        return SUCCESS;
     }
-    void Mesh::DisableObject(int index)
+
+    int Mesh::DisableObject(const char* name)
     {
-        objects[index].willBeRendered = false;
+        if (objects.count(name))
+            objects[name].willBeRendered = false;
+        else
+            return FAILURE;
+        return SUCCESS;
+    }
+
+    int Mesh::DeleteMesh(const char* name)
+    {
+        if (objects.count(name))
+            objects.erase(name);
+        else
+            return FAILURE;
+        return SUCCESS;
     }
 }
