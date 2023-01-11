@@ -15,6 +15,7 @@ namespace input
 
         glfwSetKeyCallback(myWindow, HandleKeys);
         glfwSetCursorPosCallback(myWindow, HandleMouse);
+        glfwSetMouseButtonCallback(myWindow, HandleMouseButton);
     }
 
     void Input::HandleKeys(GLFWwindow* window, int key, int code, int action, int mode)
@@ -46,6 +47,19 @@ namespace input
 
         theWindow->mouseInfo.lastX = xPos;
         theWindow->mouseInfo.lastY = yPos;
+    }
+
+    void Input::HandleMouseButton(GLFWwindow* window, int button, int action, int mods)
+    {
+        input::Input* theWindow = static_cast<input::Input*>(glfwGetWindowUserPointer(window));
+
+        input::mouse* mouseInfo = theWindow->GetMouse();
+
+        if (button >= 0 && button < 16)
+            if (action == GLFW_PRESS)
+                mouseInfo->keys[button] = true;
+            else if (action == GLFW_RELEASE)
+                mouseInfo->keys[button] = false;
     }
 
     bool* Input::GetKeys()

@@ -22,7 +22,7 @@ namespace text
 {
     struct Character
     {
-        GLuint VAO, VBO;
+        GLuint VAO = 0, VBO = 0;
 
         unsigned int TextureID = 0; // ID handle of the glyph texture
         glm::ivec2 Size = glm::ivec2(0.0f, 0.0f); // Size of glyph

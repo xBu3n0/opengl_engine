@@ -93,6 +93,9 @@
     <ClCompile Include="src\Window\Window.cpp">
       <Filter>Arquivos de Recurso\src\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\Objects\Eng2D\Triangle.cpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Main">
@@ -155,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="src\Window\Window.hpp">
       <Filter>Arquivos de Recurso\src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Objects\Eng2D\Triangle.hpp">
+      <Filter>Arquivos de Recurso\src\Objects\Eng2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

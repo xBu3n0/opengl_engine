@@ -3,12 +3,12 @@
 
 #include "../Mesh/Mesh.hpp"
 #include "../Input/Input.hpp"
+#include "../Camera/Camera.hpp"
 
 #if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
 #include <windows.h>
 #endif
 #include <GL/gl.h>
-// #include <GL/glext.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -44,6 +44,8 @@ namespace window
         int Render();
         // Recebe o status da janela
         int GetStatus();
+        // Retorna a classe Input da janela
+        input::Input* GetInput();
         // Retorna o endereço da janela
         GLFWwindow *GetWindow();
         //Meshes
@@ -62,8 +64,7 @@ namespace window
         int status = UNINITIALIZED;
 
         //Camera
-
-
+        camera::Camera *camera = nullptr;
         //Inputs
         input::Input *input = nullptr;
     };

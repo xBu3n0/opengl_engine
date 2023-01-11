@@ -12,6 +12,7 @@ namespace input
         bool mouseFirstMoved;
         GLfloat xChange,    yChange,
                 lastX,      lastY;
+        bool keys[16];
     };
 
     class Input
@@ -22,16 +23,16 @@ namespace input
 
         static void HandleKeys(GLFWwindow* window, int key, int code, int action, int mode);
         static void HandleMouse(GLFWwindow* window, double xPos, double yPos);
-        
+        static void HandleMouseButton(GLFWwindow* window, int button, int action, int mods);
+
         bool* GetKeys();
         struct mouse* GetMouse();
-    
     private:
         bool keys[1024];
         struct mouse mouseInfo = {
             true,
             0, 0,
-            0, 0
+            0, 0,
         };
 
         GLFWwindow *myWindow = nullptr;

@@ -2,6 +2,20 @@
 
 namespace camera
 {
+    Camera::Camera()
+    {
+        position = glm::vec3(0.0f, 0.0f, 0.0f);
+        worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        yaw = -90.0f;
+        pitch = 0.0f;
+        front = glm::vec3(0.0f, 0.0f, -1.0f);
+
+        moveSpeed = 2.0f;
+        turnSpeed = 0.5f;
+
+        Update();
+    }
+    
     Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLfloat startPitch, GLfloat startMoveSpeed, GLfloat startTurnSpeed)
     {
         position = startPosition;
@@ -34,6 +48,8 @@ namespace camera
 
         if(keys[GLFW_KEY_D])
             position += right * velocity;
+
+        // std::cout << position.x << " " << position.y << " " << position.z << std::endl;
     }
 
     void Camera::MouseControl(GLfloat xChange, GLfloat yChange)
@@ -49,6 +65,8 @@ namespace camera
 
         if(pitch < -89.0f)
             pitch = -89.0f;
+
+        // std::cout << yaw << " " << pitch << '\n' << std::endl;
 
         Update();
     }

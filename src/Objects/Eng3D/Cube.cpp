@@ -2,16 +2,37 @@
 
 namespace Eng3D
 {
-    void HowToRender(struct object::object &obj, bool* keys, struct input::mouse* mouseInfo)
+    void HowToRender(struct object::object &obj, bool* keys, struct input::mouse* mouseInfo, camera::Camera *camera)
     {
-        glUseProgram(obj.s);
+        obj.shader->UseShader();
+        
+        
+        GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0;
+        GLfloat deltaTime = 0.016f;
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (600.0f / 400.0f), 0.1f, 1000.0f);
+        
+        
+        camera->KeyControl(keys, deltaTime);
+        camera->MouseControl(mouseInfo->xChange, mouseInfo->yChange);
+        mouseInfo->xChange = 0.0f;
+        mouseInfo->yChange = 0.0f;
 
+        
+        uniformModel = obj.shader->uniform["model"].inValue;
+        uniformProjection = obj.shader->uniform["projection"].inValue;
+        uniformView = obj.shader->uniform["uniformView"].inValue;
+
+
+        glm::mat4 model(1.0f);
+
+        glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera->CalculateViewMatrix()));
+        
         glBindVertexArray(obj.VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, obj.VBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.IBO);
         glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
         glUseProgram(0);
@@ -66,20 +87,39 @@ namespace Eng3D
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+        GLuint verticesCount = data.size();
+        bool useIBO = true;
+        GLuint indexesCount = indexes.size();
+        bool willBeRendered = true;
+        GLuint typeOfRendering = GL_TRIANGLES;
+        shader::Shader *shader = new shader::Shader();
+        std::map<std::string, struct shader::inInfo     > RequireIn;
+        std::map<std::string, struct shader::uniformInfo> RequireUniform;
+        std::map<std::string, struct shader::layoutInfo > RequireLayout;
+
+        RequireUniform["model"]         = { "mat4", 0 };
+        RequireUniform["projection"]    = { "mat4", 0 };
+        RequireUniform["view"]          = { "mat4", 0 };
+
+        RequireLayout["pos"]            = { "(location=0)",  "vec3", "in", 0};
+
         glBindVertexArray(0);
 
-
+        
         object::object obj = {
             VAO,
             VBO,
-            (GLuint) data.size(),
+            verticesCount,
             IBO,
-            true,
-            (GLuint) indexes.size(),
-            true,
-            GL_TRIANGLES,
+            useIBO,
+            indexesCount,
+            willBeRendered,
+            typeOfRendering,
             data,
-            0,
+            shader,
+            RequireIn,
+            RequireUniform,
+            RequireLayout,
             HowToRender
         };
 

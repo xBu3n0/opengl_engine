@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../Shader/Shader.hpp"
-
+#include "../Camera/Camera.hpp"
 #include "../Input/Input.hpp"
 
 #if defined(_WIN32) || defined(WIN32) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
@@ -21,22 +21,27 @@ namespace object
 {
     struct object
     {
-        GLuint VAO;
+        GLuint VAO = 0;
 
-        GLuint VBO;
-        GLuint verticesCount;
+        GLuint VBO = 0;
+        GLuint verticesCount = 0;
         
-        GLuint IBO;
-        bool useIBO;
-        GLuint indexCount;
+        GLuint IBO = 0;
+        bool useIBO = false;
+        GLuint indexCount = 0;
         
-        bool willBeRendered;
-        GLuint typeOfRendering;
+        bool willBeRendered = false;
+        GLuint typeOfRendering = 0;
 
         std::vector<GLfloat> data;
-        GLuint s;
+        shader::Shader *shader;
+        // GLuint shaderID;
 
-        void (*HowToRender)(struct object& obj, bool* keys, struct input::mouse* mouseInfo);
+        std::map<std::string, struct shader::inInfo     > RequireIn;
+        std::map<std::string, struct shader::uniformInfo> RequireUniform;
+        std::map<std::string, struct shader::layoutInfo > RequireLayout;
+
+        void (*HowToRender)(struct object& obj, bool* keys, struct input::mouse* mouseInfo, camera::Camera* camera) = nullptr;
     };
 }
 

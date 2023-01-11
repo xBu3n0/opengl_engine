@@ -1,5 +1,4 @@
 #include "Mesh.hpp"
-#include <GLFW/glfw3.h>
 
 namespace mesh
 {
@@ -11,11 +10,20 @@ namespace mesh
         this->myWindow = myWindow;
     }
 
-    int Mesh::AddCube(glm::vec3 pos, float length, std::string object_name)
+    int Mesh::AddCube(glm::vec3 pos, float length, const char* object_name)
     {
         glfwMakeContextCurrent(myWindow);
 
         objects[object_name] = Eng3D::CreateCube(pos, length);
+
+        return SUCCESS;
+    }
+
+    int Mesh::AddTriangle(std::vector<GLfloat>& triangle, const char* object_name)
+    {
+        glfwMakeContextCurrent(myWindow);
+
+        objects[object_name] = Eng2D::CreateTriangle(triangle);
 
         return SUCCESS;
     }
@@ -46,40 +54,15 @@ namespace mesh
         return SUCCESS;
     }
 
-    void Mesh::Render(bool* keys, struct input::mouse* mouseInfo)
+    void Mesh::Render(bool* keys, struct input::mouse* mouseInfo, camera::Camera *camera)
     {
         for(std::pair<std::string, struct object::object> x : objects)
             if(x.second.willBeRendered)
-                x.second.HowToRender(x.second, keys, mouseInfo);
+                x.second.HowToRender(x.second, keys, mouseInfo, camera);
         for(std::pair<std::string, text::Text> x : texts)
             RenderText(x.second);
     }
-
-    void Mesh::RenderObject(struct object::object& obj) 
-    {
-        glUseProgram(obj.s);
-
-        if(obj.useIBO)
-        {   
-            glBindVertexArray(obj.VAO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.IBO);
-            glDrawElements(obj.typeOfRendering, obj.indexCount, GL_UNSIGNED_INT, 0);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-        }
-        else
-        {
-            glBindVertexArray(obj.VAO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.VBO);
-            glDrawArrays(obj.typeOfRendering, 0, static_cast<GLsizei>(obj.data.size()));
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-        }
-
-        glUseProgram(0);
-
-        return;
-    }
+    
 
     void Mesh::RenderText(text::Text &tex)
     {
@@ -133,10 +116,32 @@ namespace mesh
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    int Mesh::UpdateObjectShader(const char* name, GLuint s)
+    int Mesh::UpdateObjectShader(const char* name, shader::Shader& s)
     {
         if (objects.count(name))
-            objects[name].s = s;
+        {
+            if (s.GetShaderID() == 0)
+            {
+                objects[name].shader = &s;
+                
+                return SUCCESS;
+            }
+
+            for (std::pair<std::string, struct shader::inInfo> x : objects[name].RequireIn)
+                if (!s.in.count(x.first) || s.in[x.first] != x.second)
+                { std::cout << "Erro ao adicionar shader (IN) para o objeto " << name << "." << std::endl; return FAILURE; }
+
+            for (std::pair<std::string, struct shader::uniformInfo> x : objects[name].RequireUniform)
+                if (!s.uniform.count(x.first) || s.uniform[x.first] != x.second)
+                { std::cout << "Erro ao adicionar shader (UNIFORM " << x.first << ") para o objeto " << name << "." << std::endl; return FAILURE; }
+
+            for (std::pair<std::string, struct shader::layoutInfo> x : objects[name].RequireLayout)
+                if (!s.layout.count(x.first) || s.layout[x.first] != x.second)
+                { std::cout << "Erro ao adicionar shader (LAYOUT) para o objeto " << name << "." << std::endl; return FAILURE; }
+
+
+            objects[name].shader = &s;
+        }
         else
             return FAILURE;
         return SUCCESS;
@@ -151,10 +156,36 @@ namespace mesh
         return SUCCESS;
     }
 
-    int Mesh::UpdateTextShader(const char* name, GLuint s)
+    int Mesh::UpdateTextShader(const char* name, shader::Shader& s)
     {
         if (texts.count(name))
-            texts[name].s = s;
+        {
+            if (s.GetShaderID() == 0)
+            {
+                texts[name].s = s.GetShaderID();
+                return SUCCESS;
+            }
+
+            for (std::pair<std::string, struct shader::inInfo> x : objects[name].RequireIn)
+                if (!s.in.count(x.first) || s.in[x.first] != x.second)
+                {
+                    std::cout << "Erro ao adicionar shader (IN) para o texto " << name << "." << std::endl; return FAILURE;
+                }
+
+            for (std::pair<std::string, struct shader::uniformInfo> x : objects[name].RequireUniform)
+                if (!s.uniform.count(x.first) || s.uniform[x.first] != x.second)
+                {
+                    std::cout << "Erro ao adicionar shader (UNIFORM) para o texto " << name << "." << std::endl; return FAILURE;
+                }
+
+            for (std::pair<std::string, struct shader::layoutInfo> x : objects[name].RequireLayout)
+                if (!s.layout.count(x.first) || s.layout[x.first] != x.second)
+                {
+                    std::cout << "Erro ao adicionar shader (LAYOUT) para o texto " << name << "." << std::endl; return FAILURE;
+                }
+
+            texts[name].s = s.GetShaderID();
+        }
         else
             return FAILURE;
         return SUCCESS;
